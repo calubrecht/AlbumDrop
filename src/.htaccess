@@ -1,0 +1,14 @@
+Options -Indexes
+
+# Turn on mod_rewrite
+RewriteEngine On
+
+# If you want to have your own fancy "image not found" image remove the "#" from RewriteCond and RewriteRule lines
+# Make sure to apply the correct paths to reflect your current installation
+RewriteRule ^images/(.*) index.php?action=display&id=$1
+
+RewriteRule ^thumbs/(.*) index.php?action=thumb&id=$1
+
+RedirectMatch 404 ^/include/.*$
+RedirectMatch 404 ^/templates/.*$
+
