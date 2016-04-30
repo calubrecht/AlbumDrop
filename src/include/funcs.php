@@ -33,7 +33,7 @@ function refreshPage()
 
 function getUserImages()
 {
-  return array("z45", "a21");
+  return array("z45", "a21", "aa6");
 }
 
 function send404()
@@ -47,7 +47,7 @@ function getFileByID($id, $thumb=false)
 {
   global $db; 
   $results =
-    $db->queryOneRow("SELECT fileLoc,thumbLoc,isPublic,isVisible,owner FROM images WHERE id=?", $id);
+    $db->queryOneRow("SELECT fileLoc,thumbLoc,originalName,isPublic,isVisible,owner FROM images WHERE id=?", $id);
   if (!$results)
   {
     send404();
@@ -67,19 +67,15 @@ function getFileByID($id, $thumb=false)
       send404();
     }
   }
-  getFileByName($fileName);
+  getFileByName($fileName, $results["originalName"]);
 }
 
 function getFileByName($fileName, $originalName)
 {
   if (file_exists($fileName))
   {
-    header('Content-Description: File Transfer');
-    header('Content-Type: application/image-jpeg');
-    header('Content-Disposition: attachment; filename="'.basename($fileName).'"');
-    header('Expires: 0');
-    header('Cache-Control: must-revalidate');
-    header('Pragma: public');
+    header('Content-Type: ' . mime_content_type($fileName));
+    header('Content-Disposition: filename="'.basename($originalName).'"');
     header('Content-Length: ' . filesize($fileName));
     readfile($fileName);
   }
