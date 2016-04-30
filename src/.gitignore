@@ -1,3 +1,4 @@
 data/
 .*\.swp
 debug.log
+include/config_local.php

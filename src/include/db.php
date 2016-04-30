@@ -66,16 +66,18 @@ class dbHolder
 
   public function dbInit()
   {
+    global $AD_CONFIG;
     if ($this->dbInited)
     {
       return;
     }
-		try {
-		  $host = "localhost";
-      $dbName = "albumdrop";
-      $dbport = "3306";
-      $dbuser = "";
-      $dbpass = "";
+		try
+    {
+		  $host = $AD_CONFIG["DB_HOST"];
+      $dbName = $AD_CONFIG["DB_NAME"];
+      $dbport = $AD_CONFIG["DB_PORT"];
+      $dbuser = $AD_CONFIG["DB_USER"];
+      $dbpass = $AD_CONFIG["DB_PASSWORD"];
 			$pdo_connect = 'mysql:host='.$host.';dbname='.$dbName;
 		  $pdo_connect .= ';port='.$dbport;
 			$this->db = new PDO($pdo_connect, $dbuser, $dbpass, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));

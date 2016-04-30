@@ -1,23 +1,26 @@
 <?php
 
+require_once("include/config.php");
 require_once("include/funcs.php");
 session_start();
 
 
-$AD_CONFIG = array("PageRoot"=>"");
-
+logwrite("itbegins");
 $loggedIn = false;
 $error = "";
 if (isset($_GET["action"]))
 {
   if ($_GET["action"] == "display")
   {
+    logwrite("getFileByID(".$_GET["id"]. ")");
     getFileByID($_GET["id"]);
     die();
   }
 }
 elseif (isset($_POST["username"]))
 {
+  logwrite("a post");
+  logwrite("login=" .$_POST["username"] . " p=" . $_POST["password"]);
   $userId = checkLogin($_POST["username"], $_POST["password"]);
   if ($userId != -1)
   {
