@@ -9,8 +9,8 @@ function getInfoBox()
      <div>isPublic: <input type=\"checkbox\"></div>
      <div>isVisible: <input type=\"checkbox\"></div>
      <div><input type=\"submit\" value=\"Update\"></div>
-     <div>Direct Link : <span id=\"DirectLink\">/images/1234</span></div>
-     <div>Thumbnail Link : <span id=\"ThumbnailLink\">/thumbs/1234</span></div>
+     <div>Direct Link : <span id=\"DirectLink\" onclick=\"selectText(this)\">/images/1234</span></div>
+     <div>Thumbnail Link : <span id=\"ThumbnailLink\" onclick=\"selectText(this)\">/thumbs/1234</span></div>
    </form>
    </div>";
 }

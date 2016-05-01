@@ -19,3 +19,20 @@ function hideInfoBox(imgId)
 {
   document.getElementById("imageInfoBox").style.display="none";
 }
+
+function selectText(element)
+{
+  if (document.selection)
+  {
+    // IE?
+    var range = document.body.createTextRange();
+    range.moveToElementText(element);
+    range.select();
+  }
+  else
+  {
+    var range = document.createRange();
+    range.selectNode(element);
+    window.getSelection().addRange(range);
+  }
+}

@@ -2,8 +2,8 @@
 #uploadTab { display:none ; }
 
 span.imgThumb { border-width: 2px; border-style: solid; float:left ; margin:2px; padding: 2px; height: 140px;}
-span.imgThumb div.thumb  { margin: 3px 3px 0px 3px ; max-width:100px; max-height:100px; position:relative;}
-span.imgThumb div.thumb div.overlay { position:absolute; top:2px; right:2px; opacity:0; height:90px; width:90px; }
+span.imgThumb div.thumb  { margin: 3px 3px 0px 3px ; width:100px; height:100px; position:relative;}
+span.imgThumb div.thumb div.overlay { position:absolute; top:0px; right:0px; opacity:0; height:100px; width:100px; background:rgba(0,0,0,.5);}
 span.imgThumb div.thumb div.overlay:hover { opacity:1}
 span.imgThumb div.thumb div.overlay img.icon { margin: 0px 2px 0px 2px ; float:right}
 span.imgThumb div.fileName { width: 180px;}
@@ -11,4 +11,4 @@ span.imgThumb div.fileOwner { width: 90px ; font-style:italic }
 
 div#galleryTab form.LogoutButton {clear:both}
 
-div#imageInfoBox {display:none; position:absolute; top:50%; left:50%; width:300px; margin-left:-300px; height:300px; margin-top:-150px; border-style:inset; border-width:4px; z-index: 50; background:white;}
+div#imageInfoBox {display:none; position:absolute; top:50%; left:50%; width:300px; margin-left:-300px; height:300px; margin-top:-150px; border-style:inset; border-width:4px; border-color:dark-grey; z-index: 50; background:rgb(220,220,220);}
