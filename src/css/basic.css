@@ -1,7 +1,7 @@
 
 #uploadTab { display:none ; }
 
-span.imgThumb { border-width: 2px; border-style: solid; float:left ; margin:2px; padding: 2px; height: 140px;}
+span.imgThumb { border-width: 2px; border-style: solid; float:left ; margin:2px; padding: 2px; }
 span.imgThumb div.thumb  { margin: 3px 3px 0px 3px ; width:100px; height:100px; position:relative;}
 span.imgThumb div.thumb div.overlay { position:absolute; top:0px; right:0px; opacity:0; height:100px; width:100px; background:rgba(0,0,0,.5);}
 span.imgThumb div.thumb div.overlay:hover { opacity:1}
