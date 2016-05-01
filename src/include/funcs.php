@@ -32,15 +32,15 @@ function refreshPage()
 
 function send404()
 {
-  header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found");
-  require_once("templates/404.php");
+  http_response_code(404);
+  require_once("404.php");
   die();
 }
 
 function send403()
 {
-  header($_SERVER["SERVER_PROTOCOL"]." 403 Forbidden");
-  //require_once("templates/403.php");
+  http_response_code(403);
+  require_once("403.php");
   die();
 }
 

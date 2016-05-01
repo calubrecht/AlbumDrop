@@ -15,6 +15,9 @@ RedirectMatch 404 ^/templates/.*$
 # before production
 RedirectMatch 404 ^/debug.log$
 
+ErrorDocument 404 /404.php
+ErrorDocument 403 /403.php
+
 
 # Passwords are sent as plain-text, if possible you
 # should use SSL to protect the connection. If available,
