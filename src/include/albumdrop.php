@@ -16,6 +16,11 @@ if (isset($_GET["action"]))
     getFileByID($_GET["id"]);
     die();
   }
+  if ($_GET["action"] == "thumb")
+  {
+    getFileByID($_GET["id"], true);
+    die();
+  }
 }
 elseif (isset($_POST["username"]))
 {

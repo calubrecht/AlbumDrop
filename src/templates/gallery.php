@@ -9,7 +9,7 @@ html_header("Gallery")
   <div>Image list goes here.</div>
   <?php foreach (getUserImages(getCurrentUserId()) as $imgId)
   {
-    echo '<img src="'.$AD_CONFIG["PageRoot"] .'/images/' . $imgId . '">';
+    echo '<img src="'.$AD_CONFIG["PageRoot"] .'/thumbs/' . $imgId . '">';
   } ?>
   <form action="" method="post" >
   <div><input type="submit" name="logout" value="Logout"></div>
