@@ -16,20 +16,7 @@ function html_footer()
 
 function scriptTag()
 {
-  echo "<script type='text/javascript'>";
-  echo "function pickTab(tab)";
-  echo "{";
-  echo "  var tabs = document.getElementsByClassName('tabBody');";
-  echo "  for (i = 0; i < tabs.length; i++)";
-  echo "  {";
-  echo "    if (tabs[i].id == tab)"; 
-  echo "      tabs[i].style.display = 'block';";
-  echo "    else";
-  echo "      tabs[i].style.display = 'none';";
-  echo "  }";
-  echo "}";
-
-  echo "</script>";
+  echo "<script type='text/javascript' src='js/album.js'></script>";
 }
 
 ?>
