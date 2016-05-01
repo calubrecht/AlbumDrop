@@ -3,7 +3,7 @@
 function getInfoBox()
 {
   return "<div id=\"imageInfoBox\">
-   <img src=\"icons\\delete.png\" class=\"icon\" onclick=\"hideInfoBox()\">
+   <img src=\"ad_icons\\delete.png\" class=\"icon\" onclick=\"hideInfoBox()\">
    <form>
      <div>Image Name: <input id=\"ImageName\"></input></div>
      <div>isPublic: <input id=\"IsPublic\" type=\"checkbox\"></div>
@@ -26,7 +26,7 @@ function imgThumb($imgId)
   $owner = $imgInfo["ownerName"];
 
   echo "<span class=\"imgThumb\">
-   <div class=\"thumb\"><div class=\"mainImage\"><img  src=\"$pageRoot/thumbs/$imgId\" alt=\"$fileName\"></div><div class=\"overlay\"><img src=\"icons\\delete.png\" class=\"icon\"><img src=\"icons\\info.png\" onclick=\"displayInfoBox('$imgId')\" class=\"icon\"></div></div>
+   <div class=\"thumb\"><div class=\"mainImage\"><img  src=\"$pageRoot/thumbs/$imgId\" alt=\"$fileName\"></div><div class=\"overlay\"><img src=\"ad_icons\\delete.png\" class=\"icon\"><img src=\"ad_icons\\info.png\" onclick=\"displayInfoBox('$imgId')\" class=\"icon\"></div></div>
    <div class=\"fileName\">$fileName</div>
    <div class=\"fileOwner\">owner: $owner</div></span>";
 }

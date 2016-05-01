@@ -11,6 +11,7 @@ RewriteRule ^thumbs/(.*) index.php?action=thumb&id=$1
 
 RedirectMatch 404 ^/include/.*$
 RedirectMatch 404 ^/templates/.*$
+RedirectMatch 404 ^/data/.*$
 # Don't expose our debug.log, if we forget to remove log-commands
 # before production
 RedirectMatch 404 ^/debug.log$
