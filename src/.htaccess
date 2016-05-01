@@ -11,4 +11,14 @@ RewriteRule ^thumbs/(.*) index.php?action=thumb&id=$1
 
 RedirectMatch 404 ^/include/.*$
 RedirectMatch 404 ^/templates/.*$
+# Don't expose our debug.log, if we forget to remove log-commands
+# before production
+RedirectMatch 404 ^/debug.log$
+
+
+# Passwords are sent as plain-text, if possible you
+# should use SSL to protect the connection. If available,
+# uncomment the following lines to force ssl use.
+#RewriteCond %{SERVER_PORT} 80
+#RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R,L]
 
