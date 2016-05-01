@@ -44,6 +44,11 @@ function uploadImage($fileName, $tmpFileName)
   global $db; 
   $fileName = scrubName($fileName);
   $destFileName = "data/images/".$fileName;
+  $mimeType = mime_content_type($tmpFileName);
+  if (substr($mimeType,0,6) != "image/")
+  {
+    sendError("Only images can be uploaded.");
+  }
   while (file_exists($destFileName))
   {
     $destFileName = $destFileName . "1";
