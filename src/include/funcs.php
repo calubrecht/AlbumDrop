@@ -1,6 +1,5 @@
 <?php
 
-
 function logwrite($info)
 {
   $file = fopen("debug.log","a");
@@ -31,11 +30,6 @@ function refreshPage()
   die();
 }
 
-function getUserImages()
-{
-  return array("z45", "a21", "aa6");
-}
-
 function send404()
 {
   header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found");
@@ -55,14 +49,14 @@ function getFileByID($id, $thumb=false)
   $fileName = $thumb ? $results["thumbLoc"] : $results["fileLoc"];
   if ($results["isVisible"] != 1)
   {
-    if (!isset($_SESSION["userID"]))
+    if (null == getCurrentUserId())
     {
       send404();
     }
   }
   if ($results["isPublic"] != 1)
   {
-    if ($results["owner"] != $_SESSION["userID"])
+    if ($results["owner"] != getCurrentUserId())
     {
       send404();
     }

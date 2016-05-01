@@ -2,6 +2,8 @@
 
 require_once("include/config.php");
 require_once("include/funcs.php");
+require_once("include/user.php");
+require_once("include/imageInfo.php");
 session_start();
 
 

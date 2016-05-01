@@ -5,7 +5,7 @@ html_header("Gallery")
 ?>
 <h1>Welcome <?php echo $user; ?>!</h1>
 <div>Image list goes here.</div>
-<?php foreach (getUserImages() as $imgId)
+<?php foreach (getUserImages(getCurrentUserId()) as $imgId)
 {
   echo '<img src="'.$AD_CONFIG["PageRoot"] .'/images/' . $imgId . '">';
 } ?>
