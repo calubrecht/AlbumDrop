@@ -22,6 +22,12 @@ if (isset($_GET["action"]))
     die();
   }
 }
+elseif (isset($_GET["getInfo"]))
+{
+  $imageId = $_GET["getInfo"];
+  echo getImgInfoJson($imageId);
+  die();
+}
 elseif (isset($_POST["username"]))
 {
   $userId = checkLogin($_POST["username"], $_POST["password"]);

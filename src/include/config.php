@@ -8,7 +8,11 @@
 $AD_CONFIG = array();
 
 
+// Protocol and host
+$AD_CONFIG["host"] = "https://example.com";
+// Root directory of URL
 $AD_CONFIG["PageRoot"] = "";
+
 $AD_CONFIG["DB_HOST"] = "localhost";
 $AD_CONFIG["DB_NAME"] = "albumdrop";
 $AD_CONFIG["DB_PORT"] = "3306";

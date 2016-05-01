@@ -5,12 +5,13 @@ function getInfoBox()
   return "<div id=\"imageInfoBox\">
    <img src=\"icons\\delete.png\" class=\"icon\" onclick=\"hideInfoBox()\">
    <form>
-     <div>Image Name: <input></input></div>
-     <div>isPublic: <input type=\"checkbox\"></div>
-     <div>isVisible: <input type=\"checkbox\"></div>
+     <div>Image Name: <input id=\"ImageName\"></input></div>
+     <div>isPublic: <input id=\"IsPublic\" type=\"checkbox\"></div>
+     <div>isVisible: <input id=\"IsVisible\" type=\"checkbox\"></div>
      <div><input type=\"submit\" value=\"Update\"></div>
-     <div>Direct Link : <span id=\"DirectLink\" onclick=\"selectText(this)\">/images/1234</span></div>
-     <div>Thumbnail Link : <span id=\"ThumbnailLink\" onclick=\"selectText(this)\">/thumbs/1234</span></div>
+     <div>Direct Link : <a id=\"DirectLink\" onclick=\"selectText(this)\"></a></div>
+     <div>Thumbnail Link : <a id=\"ThumbnailLink\" onclick=\"selectText(this)\"></a></div>
+     <div id=\"imageInfoError\"></div>
    </form>
    </div>";
 }

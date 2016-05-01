@@ -10,14 +10,72 @@ function pickTab(tab)
   }
 }
 
-function displayInfoBox(imgId)
+function setLinkURL(linkElement, url)
 {
-  document.getElementById("imageInfoBox").style.display="block";
+  linkElement.innerText=url;
+  linkElement.href=url;
 }
 
-function hideInfoBox(imgId)
+function clearInfoBox()
+{
+  document.getElementById("ImageName").value = "";
+  document.getElementById("IsPublic").checked = false;
+  document.getElementById("IsVisible").checked = false;
+  document.getElementById("DirectLink").innerText = "";
+  document.getElementById("ThumbnailLink").innerText = "";
+  document.getElementById("imageInfoError").innerText = "";
+}
+
+function displayInfoBox(imgId)
+{
+  hideInfoBox();
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange= function()
+  {
+    if (xmlhttp.readyState == 4 && xmlhttp.status==200)
+    {
+      try
+      {
+        var response = JSON.parse(xmlhttp.responseText);
+        document.getElementById("imageInfoBox").style.display="block";
+        if (response["success"])
+        {
+          document.getElementById("ImageName").value = response["imageName"];
+          document.getElementById("IsPublic").checked = response["isPublic"] == 1;
+          document.getElementById("IsVisible").checked = response["isVisible"] ==1;
+          document.getElementById("DirectLink").innerText = response["directLink"];
+          document.getElementById("ThumbnailLink").innerText = response["thumbLink"];
+        }
+        else
+        { 
+          document.getElementById("imageInfoError").style.display="block";
+          document.getElementById("imageInfoError").innerText = response["error"];
+        }
+      }
+      catch (e)
+      {
+        
+        document.getElementById("imageInfoBox").style.display="block";
+        document.getElementById("imageInfoError").style.display="block";
+        document.getElementById("imageInfoError").innerText = xmlhttp.responseText;
+      }
+    }
+    else if (xmlhttp.readyState == 4 && xmlhttp.status==500)
+    {
+      document.getElementById("imageInfoBox").style.display="block";
+      document.getElementById("imageInfoError").style.display="block";
+      document.getElementById("imageInfoError").innerText = "oops";
+    }
+  };
+  xmlhttp.open("GET", "?getInfo="+imgId);
+  xmlhttp.send();
+}
+
+
+function hideInfoBox()
 {
   document.getElementById("imageInfoBox").style.display="none";
+  clearInfoBox();
 }
 
 function selectText(element)

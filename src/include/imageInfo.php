@@ -89,6 +89,39 @@ function createThumbnail($srcFile, $destFile, $destX, $destY)
   return true;
 }
 
+function getImgInfo($imgId)
+{
+  global $db;
+  $imgInfo = $db->queryOneRow("SELECT originalName, fullName as ownerName, isPublic, isVisible  FROM images, users WHERE images.id=? and images.owner=users.idusers", "$imgId");
+  return $imgInfo;
+}
+
+function getImgInfoJson($imgId)
+{
+  global $AD_CONFIG;
+  $imgInfo = getImgINfo($imgId);
+  if (!$imgInfo)
+  {
+    $ret = array();
+    $ret["success"] = false;
+    $ret["error"] = "Image not found.";
+    return json_encode($ret);
+  }
+  $SiteRoot = $AD_CONFIG["host"] ."/";
+  if ($AD_CONFIG["PageRoot"] != "")
+  {
+    $SiteRoot = $SiteRoot . $AD_CONFIG["PageRoot"] ."/";
+  }
+  $ret = array();
+  $ret["imageName"] = $imgInfo["originalName"];
+  $ret["isPublic"] = $imgInfo["isPublic"];
+  $ret["isVisible"] = $imgInfo["isVisible"];
+  $ret["directLink"] = $SiteRoot."images/".$imgId;
+  $ret["thumbLink"] = $SiteRoot."thumbs/".$imgId;
+  $ret["success"] = true;
+  return json_encode($ret);
+}
+
 function uploadImage($fileName, $tmpFileName)
 {
   global $db; 
