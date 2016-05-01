@@ -12,6 +12,34 @@ class dbHolder
     return $this->db;
   }
 
+  public function execute($query, $arguments)
+  {
+    try
+    { 
+      unset($this->error);
+      $this->dbInit();
+      $params = is_array($arguments) ? $arguments : array($arguments);
+      $statement = $this->db->prepare($query);
+      if (!$statement)
+      {
+        $this->error = "PrepareStatement Error:" + $this->db->errorInfo();
+        return false;
+      }
+      if($statement->execute($params))
+      {
+        $statement->closeCursor();
+        return true;
+      }
+      $statement->closeCursor();
+      $this->error = "ExecuteStatement Error:" + $this->db->errorInfo();
+      return false;
+		}
+    catch (PDOException $e) {
+			$this->error = "PDOException: ".$e->getMessage();
+      return false;
+		}
+  }
+
   public function queryAll($query, $arguments)
   {
     try
@@ -31,6 +59,7 @@ class dbHolder
         $statement->closeCursor();
         return $result;
       }
+      $statement->closeCursor();
       $this->error = "ExecuteStatement Error:" + $this->db->errorInfo();
       return false;
 		}

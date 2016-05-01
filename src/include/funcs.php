@@ -37,6 +37,13 @@ function send404()
   die();
 }
 
+function send403()
+{
+  header($_SERVER["SERVER_PROTOCOL"]." 403 Forbidden");
+  //require_once("templates/403.php");
+  die();
+}
+
 function getFileByID($id, $thumb=false)
 {
   global $db; 
@@ -77,6 +84,12 @@ function getFileByName($fileName, $originalName)
   {
     send404();
   }
+  die();
+}
+
+function sendError($errorText)
+{
+  echo $errorText;
   die();
 }
 ?>

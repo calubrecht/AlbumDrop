@@ -7,22 +7,18 @@ require_once("include/imageInfo.php");
 session_start();
 
 
-logwrite("itbegins");
 $loggedIn = false;
 $error = "";
 if (isset($_GET["action"]))
 {
   if ($_GET["action"] == "display")
   {
-    logwrite("getFileByID(".$_GET["id"]. ")");
     getFileByID($_GET["id"]);
     die();
   }
 }
 elseif (isset($_POST["username"]))
 {
-  logwrite("a post");
-  logwrite("login=" .$_POST["username"] . " p=" . $_POST["password"]);
   $userId = checkLogin($_POST["username"], $_POST["password"]);
   if ($userId != -1)
   {
@@ -36,6 +32,32 @@ elseif (isset($_POST["username"]))
   {
     $error = "Incorrect Credentials";
   }
+}
+else if (isset($_POST["uploadFiles"]))
+{
+  if (!isLoggedIn())
+  {
+    send403();
+  }
+  $files = $_FILES["files"];
+  if (is_array($files["name"]))
+  {
+    for ($index = 0; $index < count($files["name"]); $index++)
+    {
+      uploadImage($files["name"][$index], $files["tmp_name"][$index]);
+    }
+  }
+  else
+  {
+    if (isset($files["error"]) && $files["error"] > 0)
+    {
+      $err = $files["error"];
+      if ($err == 1 || $err = 2) sendError("Upload failed. File too large.");
+      if ($err > 2) sendError("Upload failed. Unknown error.");
+    }
+    uploadImage($files["name"], $files["tmp_name"]);
+  }
+  refreshPage();
 }
 else if (isset($_POST["logout"]))
 {
