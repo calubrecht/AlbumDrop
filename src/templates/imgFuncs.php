@@ -9,9 +9,19 @@ function getInfoBox()
      <div>isPublic: <input id=\"IsPublic\" type=\"checkbox\"></div>
      <div>isVisible: <input id=\"IsVisible\" type=\"checkbox\"></div>
      <div><input type=\"button\" value=\"Update\" onclick=\"updateImageInfo()\"></div>
-     <div>Direct Link : <a id=\"DirectLink\" onclick=\"selectText(this)\"></a></div>
-     <div>Thumbnail Link : <a id=\"ThumbnailLink\" onclick=\"selectText(this)\"></a></div>
+     <div>Direct Link : <a id=\"DirectLink\" onclick=\"selectText(this)\" ondblclick=\"openURL(this)\"></a></div>
+     <div>Thumbnail Link : <a id=\"ThumbnailLink\" onclick=\"selectText(this)\" ondblclick=\"openURL(this)\"></a></div>
      <div id=\"imageInfoError\"></div>
+   </form>
+   </div>";
+}
+function getZoomBox()
+{
+  return "<div id=\"zoomBox\">
+   <img src=\"ad_icons\\delete.png\" class=\"icon\" onclick=\"hideZoomBox()\" title=\"Hide\">
+   <div>
+     <img id=\"zoomImage\" src=\"\">
+   </div>
    </form>
    </div>";
 }
@@ -26,7 +36,7 @@ function imgThumb($imgId)
   $owner = $imgInfo["ownerName"];
 
   echo "<span class=\"imgThumb\">
-   <div class=\"thumb\"><div class=\"mainImage\"><img  src=\"$pageRoot/thumbs/$imgId\" alt=\"$fileName\"></div><div class=\"overlay\"><img src=\"ad_icons\\delete.png\" class=\"icon\" title=\"Delete image\"><img src=\"ad_icons\\info.png\" onclick=\"displayInfoBox('$imgId')\" class=\"icon\" title=\"Image Info\"></div></div>
+   <div class=\"thumb\"><div class=\"mainImage\"><img  src=\"$pageRoot/thumbs/$imgId\" alt=\"$fileName\"></div><div class=\"overlay\"><img src=\"ad_icons\\delete.png\" class=\"icon\" title=\"Delete image\"><img src=\"ad_icons\\info.png\" onclick=\"displayInfoBox('$imgId')\" class=\"icon\" title=\"Image Info\"><img src=\"ad_icons\\magnify.png\" onclick=\"zoom('$pageRoot/images/$imgId')\" class=\"icon\"></div></div>
    <div class=\"fileName\">$fileName</div>
    <div class=\"fileOwner\">owner: $owner</div></span>";
 }

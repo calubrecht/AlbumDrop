@@ -34,6 +34,7 @@ function clearInfoBox()
 function displayInfoBox(imgId)
 {
   hideInfoBox();
+  hideZoomBox();
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange= function()
   {
@@ -130,11 +131,23 @@ function updateImageInfo()
   xmlhttp.send();
 }
 
+function displayZoomBox(imgUrl)
+{
+  hideInfoBox();
+  document.getElementById("zoomImage").src = imgUrl;
+  document.getElementById("zoomBox").style.display= "block";
+}
 
 function hideInfoBox()
 {
   document.getElementById("imageInfoBox").style.display="none";
   clearInfoBox();
+}
+
+function hideZoomBox()
+{
+  document.getElementById("zoomBox").style.display="none";
+  document.getElementById("zoomImage").src = "";
 }
 
 function selectText(element)
@@ -152,4 +165,14 @@ function selectText(element)
     range.selectNode(element);
     window.getSelection().addRange(range);
   }
+}
+
+function openURL(element)
+{
+  window.open(element.innerText);
+}
+
+function zoom(url)
+{
+  displayZoomBox(url);
 }
