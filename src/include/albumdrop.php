@@ -6,7 +6,6 @@ require_once("include/user.php");
 require_once("include/imageInfo.php");
 session_start();
 
-
 $loggedIn = false;
 $error = "";
 if (isset($_GET["action"]))
@@ -26,6 +25,16 @@ elseif (isset($_GET["getInfo"]))
 {
   $imageId = $_GET["getInfo"];
   echo getImgInfoJson($imageId);
+  die();
+}
+elseif (isset($_GET["updateInfo"]))
+{
+  $imageId = $_GET["updateInfo"];
+  $fileName = $_GET["fileName"];
+  $isPublic = $_GET["isPublic"];
+  $isVisible = $_GET["isVisible"];
+  logwrite("call updateImgInfp(" + $imageId + ", " + $fileName + " ," + $isPublic + ", " + $isVisible + ")");
+  echo updateImgInfo($imageId, $fileName, $isPublic, $isVisible);
   die();
 }
 elseif (isset($_POST["username"]))

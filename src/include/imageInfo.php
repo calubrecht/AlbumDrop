@@ -96,6 +96,33 @@ function getImgInfo($imgId)
   return $imgInfo;
 }
 
+function updateImgInfo($imageId, $fileName, $isPublic, $isVisible)
+{
+  global $db;
+  logwrite("updateImgInfp(" + $imageId + ", " + $fileName + " ," + $isPublic + ", " + $isVisible + ")");
+  $imgOwner = $db->queryOneColumn("SELECT owner  FROM images WHERE images.id=?", "owner", "$imageId");
+  if (getCurrentUserId() != $imgOwner)
+  {
+    $ret = array();
+    $ret["success"] = false;
+    $ret["error"] = "Only owner may update image data";
+    return json_encode($ret);
+  }
+  if ($db->execute("UPDATE images set originalName=?, isPublic=?, isVisible=? WHERE id=?", array($fileName, $isPublic, $isVisible, $imageId)))
+  {
+    $ret = array();
+    $ret["success"] = true;
+    return json_encode($ret);
+  }
+  else
+  {
+    $ret = array();
+    $ret["success"] = false;
+    $ret["error"] = $db->error;
+    return json_encode($ret);
+  }
+}
+
 function getImgInfoJson($imgId)
 {
   global $AD_CONFIG;
