@@ -135,6 +135,11 @@ function displayZoomBox(imgUrl)
 {
   hideInfoBox();
   document.getElementById("zoomImage").src = imgUrl;
+  //document.getElementById("zoomBox").style.display= "block";
+}
+
+function showZoombox()
+{
   document.getElementById("zoomBox").style.display= "block";
 }
 

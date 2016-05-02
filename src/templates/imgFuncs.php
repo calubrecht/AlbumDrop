@@ -20,7 +20,7 @@ function getZoomBox()
   return "<div id=\"zoomBox\">
    <img src=\"ad_icons\\delete.png\" class=\"icon\" onclick=\"hideZoomBox()\" title=\"Hide\">
    <div>
-     <img id=\"zoomImage\" src=\"\">
+     <img id=\"zoomImage\" src=\"\"  onload=\"showZoombox()\">
    </div>
    </form>
    </div>";
