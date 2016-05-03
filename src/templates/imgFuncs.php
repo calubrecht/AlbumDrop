@@ -32,11 +32,10 @@ function imgThumb($imgId)
   global $db;
   $imgInfo = $db->queryOneRow("SELECT originalName, fullName as ownerName, isPublic, isVisible  FROM images, users WHERE images.id=? and images.owner=users.idusers", "$imgId");
   $fileName = $imgInfo["originalName"];
-  $pageRoot = $AD_CONFIG['PageRoot'];
   $owner = $imgInfo["ownerName"];
 
   echo "<span class=\"imgThumb\">
-   <div class=\"thumb\"><div class=\"mainImage\"><img  src=\"$pageRoot/thumbs/$imgId\" alt=\"$fileName\"></div><div class=\"overlay\"><img src=\"ad_icons\\delete.png\" class=\"icon\" title=\"Delete image\"><img src=\"ad_icons\\info.png\" onclick=\"displayInfoBox('$imgId')\" class=\"icon\" title=\"Image Info\"><img src=\"ad_icons\\magnify.png\" onclick=\"zoom('$pageRoot/images/$imgId')\" class=\"icon\"></div></div>
+   <div class=\"thumb\"><div class=\"mainImage\"><img  src=\"thumbs/$imgId\" alt=\"$fileName\"></div><div class=\"overlay\"><img src=\"ad_icons\\delete.png\" class=\"icon\" title=\"Delete image\"><img src=\"ad_icons\\info.png\" onclick=\"displayInfoBox('$imgId')\" class=\"icon\" title=\"Image Info\"><img src=\"ad_icons\\magnify.png\" onclick=\"zoom('images/$imgId')\" class=\"icon\"></div></div>
    <div class=\"fileName\">$fileName</div>
    <div class=\"fileOwner\">owner: $owner</div></span>";
 }
