@@ -13,7 +13,7 @@ $AD_CONFIG["host"] = "https://example.com";
 // Root directory of URL
 $AD_CONFIG["PageRoot"] = "";
 
-$AD_CONFIG["DB_HOST"] = "localhost";
+$AD_CONFIG["DB_HOST"] = "127.0.0.1";
 $AD_CONFIG["DB_NAME"] = "albumdrop";
 $AD_CONFIG["DB_PORT"] = "3306";
 $AD_CONFIG["DB_USER"] = "";
