@@ -99,7 +99,6 @@ function getImgInfo($imgId)
 function updateImgInfo($imageId, $fileName, $isPublic, $isVisible)
 {
   global $db;
-  logwrite("updateImgInfp(" + $imageId + ", " + $fileName + " ," + $isPublic + ", " + $isVisible + ")");
   $imgOwner = $db->queryOneColumn("SELECT owner  FROM images WHERE images.id=?", "owner", "$imageId");
   if (getCurrentUserId() != $imgOwner)
   {
@@ -177,7 +176,6 @@ function uploadImage($fileName, $tmpFileName)
   $id = makeID();
   if (!$db->execute("INSERT INTO images (id, fileLoc, thumbLoc, originalName, owner) VALUES (?, ?, ?, ?, ?)", array($id, $destFileName, $thumbFileName, $fileName, getCurrentUserId())))
   {
-    logwrite($db->error); 
     sendError("Upload failed. Database Error");
   }
 }

@@ -16,7 +16,6 @@ function checkLogin($user, $password)
   if($results)
   {
     $dbPW = $results["pwHash"];
-    echo password_verify($password, $dbPW) ? "yeh" : "no";
     return password_verify($password, $dbPW) ? $results["idusers"] : -1;
   }
   else
@@ -55,16 +54,19 @@ function getFileByID($id, $thumb=false)
     send404();
   }
   $fileName = $thumb ? $results["thumbLoc"] : $results["fileLoc"];
-  if ($results["isVisible"] != 1)
+  $isVisible = $results["isVisible"] ==1;
+  $isPublic = $results["isPublic"] ==1;
+  
+  if (null == getCurrentUserId())
   {
-    if (null == getCurrentUserId())
+    if (!$isVisible)
     {
       send404();
     }
   }
-  if ($results["isPublic"] != 1)
+  if ($results["owner"] != getCurrentUserId())
   {
-    if ($results["owner"] != getCurrentUserId())
+    if (!$isVisible && !$isPublic)
     {
       send404();
     }

@@ -34,7 +34,6 @@ elseif (isset($_GET["updateInfo"]))
   $fileName = $_GET["fileName"];
   $isPublic = $_GET["isPublic"];
   $isVisible = $_GET["isVisible"];
-  logwrite("call updateImgInfp(" + $imageId + ", " + $fileName + " ," + $isPublic + ", " + $isVisible + ")");
   echo updateImgInfo($imageId, $fileName, $isPublic, $isVisible);
   die();
 }
