@@ -6,9 +6,9 @@ function getInfoBox()
    <img src=\"ad_icons\\delete.png\" class=\"icon\" onclick=\"hideInfoBox()\" title=\"Hide\">
    <form>
      <div><div class=\"firstColumn\">Image Name:</div> <input id=\"ImageName\"></input class=\"secondColumn\"></div>
-     <div><div class=\"firstColumn\">isPublic:</div> <input id=\"IsPublic\" type=\"checkbox\" class=\"secondColumnCheck\"><div class=\"spacer\"></div></div>
-     <div><div class=\"firstColumn\">isVisible:</div> <input id=\"IsVisible\" type=\"checkbox\" class=\"secondColumnCheck\"><div class=\"spacer\"></div></div>
-     <div><div class=\"firstColumn\"><input type=\"button\" value=\"Update\" onclick=\"updateImageInfo()\"></div><div class=\"spacer\"></div></div>
+     <div><div class=\"firstColumn\">isPublic:</div> <input id=\"IsPublic\" type=\"checkbox\" class=\"secondColumnCheck\"></div>
+     <div><div class=\"firstColumn\">isVisible:</div> <input id=\"IsVisible\" type=\"checkbox\" class=\"secondColumnCheck\"></div>
+     <div><div class=\"firstColumn\"><input type=\"button\" value=\"Update\" onclick=\"updateImageInfo()\"></div></div>
      <div><div class=\"firstColumn\">Direct Link :</div> <a id=\"DirectLink\" onclick=\"selectText(this)\" ondblclick=\"openURL(this)\" class=\"secondColumn\"></a></div>
      <div><div class=\"firstColumn\">Thumbnail Link :</div> <a id=\"ThumbnailLink\" onclick=\"selectText(this)\" ondblclick=\"openURL(this)\" class=\"secondColumn\"></a></div>
      <div id=\"imageInfoError\"></div>

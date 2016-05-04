@@ -20,9 +20,9 @@ span.imgThumb div.thumb div.overlay img.icon { margin: 0px 2px 0px 2px ; float:r
 span.imgThumb div.fileName { width: 180px;}
 span.imgThumb div.fileOwner { width: 90px ; font-style:italic }
 
-.firstColumn {width:30%; float: left; text-align:right}
-.secondColumn {width:65%; float: left; margin: 0px 0px 8px 10px }
-.secondColumnCheck {float: left; margin: 0px 0px 8px 10px; text-align:left }
+.firstColumn {width:30%; float: left; text-align:right; clear:left}
+.secondColumn {width:65%; float: left; margin: 0px 0px 8px 10px;  }
+.secondColumnCheck {float: left; margin: 0px 0px 8px 10px; text-align:left; }
 
 div#galleryTab form.LogoutButton {clear:both}
 div.spacer {clear:both}
