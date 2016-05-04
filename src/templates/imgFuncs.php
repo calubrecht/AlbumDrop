@@ -35,7 +35,7 @@ function imgThumb($imgId)
   $owner = $imgInfo["ownerName"];
 
   echo "<span class=\"imgThumb\">
-   <div class=\"thumb\"><div class=\"mainImage\"><img  src=\"thumbs/$imgId\" alt=\"$fileName\"></div><div class=\"overlay\"><img src=\"ad_icons\\delete.png\" class=\"icon\" title=\"Delete image\"><img src=\"ad_icons\\info.png\" onclick=\"displayInfoBox('$imgId')\" class=\"icon\" title=\"Image Info\"><img src=\"ad_icons\\magnify.png\" onclick=\"zoom('images/$imgId')\" class=\"icon\"></div></div>
+   <div class=\"thumb\"><div class=\"mainImage\"><img  src=\"thumbs/$imgId\" alt=\"$fileName\"></div><div class=\"overlay\"><img src=\"ad_icons\\delete.png\" class=\"icon\" title=\"Delete image\" onclick=\"deleteImage('$imgId')\"><img src=\"ad_icons\\info.png\" onclick=\"displayInfoBox('$imgId')\" class=\"icon\" title=\"Image Info\"><img src=\"ad_icons\\magnify.png\" onclick=\"zoom('images/$imgId')\" class=\"icon\"></div></div>
    <div class=\"fileName\">$fileName</div>
    <div class=\"fileOwner\">owner: $owner</div></span>";
 }

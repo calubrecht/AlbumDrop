@@ -9,6 +9,7 @@ html_header("Gallery")
 <div id = "galleryTab" class="tabBody">
   <?= getInfoBox() ?>
   <?= getZoomBox() ?>
+  <div id="galleryError" class="error"></div>
   <?php foreach (getUserImages(getCurrentUserId()) as $imgId)
   {
     imgThumb($imgId);

@@ -95,6 +95,11 @@ else if ($postData != "")
       register($data);
       die();
     }
+    if ($data["action"] == "delete")
+    {
+      echo deleteImg($data["imgId"]);
+      die();
+    }
   }
 }
 else if (isset($_SESSION["user"]))

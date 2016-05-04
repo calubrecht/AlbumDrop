@@ -98,6 +98,22 @@ class dbHolder
     return $result[$column];
   }
 
+  public function beginTransaction()
+  {
+    $this->dbInit();
+    $this->db->beginTransaction();
+  }
+  
+  public function commitTransaction()
+  {
+    $this->db->commit();
+  }
+  
+  public function rollbackTransaction()
+  {
+    $this->db->rollBack();
+  }
+
   public function dbInit()
   {
     global $AD_CONFIG;

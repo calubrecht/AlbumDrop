@@ -124,6 +124,36 @@ function updateImgInfo($imageId, $fileName, $isPublic, $isVisible)
   }
 }
 
+function deleteImg($imageId)
+{
+  global $db;
+  $db->beginTransaction();
+  $row = $db->queryOneRow("SELECT * FROM images WHERE images.id=?", "$imageId");
+  if (getCurrentUserId() != $row["owner"])
+  {
+    $ret = array();
+    $ret["success"] = false;
+    $ret["error"] = "Only owner may delete images.";
+    $db->rollbackTransaction();
+    return json_encode($ret);
+  }
+  $ret = $db->execute("DELETE FROM images WHERE images.id=?", "$imageId");
+  if (!$ret)
+  {
+    $ret = array();
+    $ret["success"] = false;
+    $ret["error"] = $db->error;
+    $db->rollbackTransaction();
+    return json_encode($ret);
+  }
+  unlink($row["fileLoc"]);
+  unlink($row["thumbLoc"]);
+  $db->commitTransaction();
+  $ret = array();
+  $ret["success"] = true;
+  return json_encode($ret);
+}
+
 function getImgInfoJson($imgId)
 {
   global $AD_CONFIG;

@@ -197,6 +197,48 @@ function register()
   }
 }
 
+function deleteImage(imgId)
+{
+  document.getElementById("galleryError").style.display="none";
+  var yesno = window.confirm("Are you sure you want to delete this image?");
+  if (yesno == false)
+  {
+    return;
+  }
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange= function()
+  {
+    if (xmlhttp.readyState == 4 && xmlhttp.status==200)
+    {
+      try
+      {
+        var response = JSON.parse(xmlhttp.responseText);
+        if (response["success"])
+        {
+          location.reload();
+        }
+        else
+        { 
+          document.getElementById("galleryError").style.display="block";
+          document.getElementById("galleryError").innerText = response["error"];
+        }
+      }
+      catch (e)
+      {
+        
+        document.getElementById("galleryError").style.display="block";
+        document.getElementById("galleryError").innerText = xmlhttp.responseText;
+      }
+    }
+  };
+  var command =  {};
+  command["action"] = "delete";
+  command["imgId"] = imgId;
+  xmlhttp.open("POST", "", true);
+  xmlhttp.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+  xmlhttp.send(JSON.stringify(command));
+}
+
 function displayZoomBox(imgUrl)
 {
   hideInfoBox();
