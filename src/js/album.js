@@ -1,12 +1,19 @@
 function pickTab(tab)
 {
-  var tabs = document.getElementsByClassName('tabBody');
+  var tabBodies = document.getElementsByClassName('tabBody');
+  var tabs = document.getElementsByClassName('tab');
   for (i = 0; i < tabs.length; i++)
   {
-    if (tabs[i].id == tab)
-      tabs[i].style.display = 'block';
+    if (tabBodies[i].id == tab)
+    {
+      tabBodies[i].style.display = 'block';
+      tabs[i].className = "tab active";
+    }
     else
-      tabs[i].style.display = 'none';
+    {
+      tabBodies[i].style.display = 'none';
+      tabs[i].className = "tab";
+    }
   }
 }
 
@@ -131,11 +138,69 @@ function updateImageInfo()
   xmlhttp.send();
 }
 
+function register()
+{
+  var form = document.getElementById("registerForm");
+  var formData = {};
+  var inputs = form.getElementsByTagName("input");
+  for (i = 0; i < inputs.length; i++)
+  {
+    formData[inputs[i].name] = inputs[i].value;
+  }
+  var errorBox = document.getElementById("registerError");
+  if (formData["password"] != formData["confirmPassword"])
+  {
+    errorBox.innerText = "Password confirmation does not match."
+  }
+  else if (formData["username"] == "")
+  {
+    errorBox.innerText = "Please enter a username";
+  }
+  else if (formData["password"] == "")
+  {
+    errorBox.innerText = "Please enter a password";
+  }
+  else if (formData["displayName"] == "")
+  {
+    errorBox.innerText = "Please be friendly and enter a Dispay Name";
+  }
+  else
+  {
+    errorBox.innerText = "";
+    formData["action"] = "register";
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange= function()
+    {
+      if (xmlhttp.readyState == 4 && xmlhttp.status==200)
+      {
+        try
+        {
+          var response = JSON.parse(xmlhttp.responseText);
+          if (response["success"])
+          {
+            location.reload();
+          }
+          else
+          {
+            errorBox.innerText = response["error"];
+          }
+        }
+        catch (e)
+        {
+          errorBox.innerText = xmlhttp.responseText;
+        }
+      }
+    };
+    xmlhttp.open("POST", "", true);
+    xmlhttp.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+    xmlhttp.send(JSON.stringify(formData));
+  }
+}
+
 function displayZoomBox(imgUrl)
 {
   hideInfoBox();
   document.getElementById("zoomImage").src = imgUrl;
-  //document.getElementById("zoomBox").style.display= "block";
 }
 
 function showZoombox()

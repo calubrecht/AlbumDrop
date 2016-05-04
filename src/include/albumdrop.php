@@ -8,6 +8,7 @@ session_start();
 
 $loggedIn = false;
 $error = "";
+$postData = file_get_contents("php://input");
 if (isset($_GET["action"]))
 {
   if ($_GET["action"] == "display")
@@ -44,8 +45,7 @@ elseif (isset($_POST["username"]))
   {
     $loggedIn = true;
     $user = $_POST["username"];
-    $_SESSION["user"] = $user;
-    $_SESSION["userID"] = $userId;
+    setUser($user, $userId);
     refreshPage();
   }
   else
@@ -84,6 +84,19 @@ else if (isset($_POST["logout"]))
   $loggedIn = false;
   session_destroy();
   refreshPage();
+}
+else if ($postData != "")
+{
+  $data = json_decode($postData, true);
+  if ($data != NULL)
+  {
+    // json post data
+    if ($data["action"] == "register")
+    {
+      register($data);
+      die();
+    }
+  }
 }
 else if (isset($_SESSION["user"]))
 {

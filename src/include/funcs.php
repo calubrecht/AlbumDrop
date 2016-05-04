@@ -12,10 +12,11 @@ require_once("db.php");
 function checkLogin($user, $password)
 {
   global $db; 
-  $results = $db->queryOneRow("SELECT pwHash, idusers  FROM users WHERE login=?", "$user");
+  $results = getLoginInfo($user);
   if($results)
   {
     $dbPW = $results["pwHash"];
+    echo password_verify($password, $dbPW) ? "yeh" : "no";
     return password_verify($password, $dbPW) ? $results["idusers"] : -1;
   }
   else

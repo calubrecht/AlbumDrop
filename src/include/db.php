@@ -5,6 +5,7 @@ class dbHolder
   private $dbInited = false;
   private $db;
   public $error;
+  public $errorCode;
 
   public function getDB()
   {
@@ -36,6 +37,7 @@ class dbHolder
 		}
     catch (PDOException $e) {
 			$this->error = "PDOException: ".$e->getMessage();
+			$this->errorCode = $e->getCode();
       return false;
 		}
   }
@@ -51,6 +53,7 @@ class dbHolder
       if (!$statement)
       {
         $this->error = "PrepareStatement Error:" + $this->db->errorInfo();
+        $this->errorCode = NULL;
         return false;
       }
       if($statement->execute($params))
@@ -61,10 +64,12 @@ class dbHolder
       }
       $statement->closeCursor();
       $this->error = "ExecuteStatement Error:" + $this->db->errorInfo();
+      $this->errorCode = NULL;
       return false;
 		}
     catch (PDOException $e) {
 			$this->error = "PDOException: ".$e->getMessage();
+			$this->errorCode = $e->getCode();
       return false;
 		}
   }
