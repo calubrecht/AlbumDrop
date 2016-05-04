@@ -73,6 +73,7 @@ function createThumbnail($srcFile, $destFile, $destX, $destY)
     $newWidth = floor ($width * ($destY / $height));
   }
   $newImage = imagecreatetruecolor($newWidth, $newHeight);
+  imagealphablending($newImage, FALSE);
   imagecopyresampled($newImage, $srcImage, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
   if ($mimeType == "image/jpeg")
   {
@@ -80,6 +81,7 @@ function createThumbnail($srcFile, $destFile, $destX, $destY)
   }
   elseif ($mimeType == "image/png")
   {
+    imagesavealpha($newImage, TRUE);
     imagepng($newImage, $destFile);
   }
   elseif ($mimeType == "image/gif")
