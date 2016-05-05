@@ -17,7 +17,7 @@ span.imgThumb div.thumb  { margin: 3px 3px 0px 3px ; width:100px; height:100px; 
 span.imgThumb div.thumb div.overlay { position:absolute; top:0px; right:0px; opacity:0; height:100px; width:100px; background:rgba(0,0,0,.5);}
 span.imgThumb div.thumb div.overlay:hover { opacity:1}
 span.imgThumb div.thumb div.overlay img.icon { margin: 0px 2px 0px 2px ; float:right}
-span.imgThumb div.fileName { width: 180px;}
+span.imgThumb div.fileName { width: 180px; height:18px ; overflow:hidden}
 span.imgThumb div.fileOwner { width: 90px ; font-style:italic }
 
 .firstColumn {width:30%; float: left; text-align:right; clear:left}
