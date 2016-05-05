@@ -56,6 +56,7 @@ function createThumbnail($srcFile, $destFile, $destX, $destY)
   }
   else
   {
+    logwrite("Don't know mimetype = $mimeType");
     return false;
   }
   $width = imagesx($srcImage);
@@ -63,7 +64,8 @@ function createThumbnail($srcFile, $destFile, $destX, $destY)
   if ($width <= $destX && $height <= $destY)
   {
     // No need for a thumbnail
-    return false;
+    $res = ["height"=>$height, "width"=>$width, "thumbHeight"=>$height, "thumbWidth"=>$width, "oneFile"=>true];
+    return $res;
   }
   $newHeight = floor ($height * ($destX / $width));
   $newWidth = $destX;
@@ -88,7 +90,8 @@ function createThumbnail($srcFile, $destFile, $destX, $destY)
   {
     imagegif($newImage, $destFile);
   }
-  return true;
+  $res = ["height"=>$height, "width"=>$width, "thumbHeight"=>$newHeight, "thumbWidth"=>$newWidth];
+  return $res;
 }
 
 function getImgInfo($imgId)
@@ -124,6 +127,14 @@ function updateImgInfo($imageId, $fileName, $isPublic, $isVisible)
   }
 }
 
+function quiet_unlink($filename)
+{
+  if (file_exists($filename))
+  {
+    unlink($filename);
+  }
+}
+
 function deleteImg($imageId)
 {
   global $db;
@@ -146,8 +157,8 @@ function deleteImg($imageId)
     $db->rollbackTransaction();
     return json_encode($ret);
   }
-  unlink($row["fileLoc"]);
-  unlink($row["thumbLoc"]);
+  quiet_unlink($row["fileLoc"]);
+  quiet_unlink($row["thumbLoc"]);
   $db->commitTransaction();
   $ret = array();
   $ret["success"] = true;
@@ -200,15 +211,22 @@ function uploadImage($fileName, $tmpFileName)
   {
     $thumbFileName = $thumbFileName . "1";
   }
-  if (!createThumbnail($destFileName, $thumbFileName, 100, 100))
+  $res = createThumbnail($destFileName, $thumbFileName, 100, 100);
+  logwrite(json_encode($res));
+  if ($res == false)
+  {
+    $thumbFileName = $destFileName;
+    $res = ["height"=>null, "width"=>null, "thumbHeight"=>null, "thumbWidth"=>null];
+  }
+  if (isset($res["oneFile"]))
   {
     $thumbFileName = $destFileName;
   }
 
   $id = makeID();
-  if (!$db->execute("INSERT INTO images (id, fileLoc, thumbLoc, originalName, owner) VALUES (?, ?, ?, ?, ?)", array($id, $destFileName, $thumbFileName, $fileName, getCurrentUserId())))
+  if (!$db->execute("INSERT INTO images (id, fileLoc, thumbLoc, originalName, owner, height, width, thumbHeight, thumbWidth) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", array($id, $destFileName, $thumbFileName, $fileName, getCurrentUserId(), $res["height"], $res["width"], $res["thumbHeight"], $res["thumbWidth"])))
   {
-    sendError("Upload failed. Database Error");
+    sendError("Upload failed. Database Error " . $db->error);
   }
 }
 

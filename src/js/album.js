@@ -239,9 +239,19 @@ function deleteImage(imgId)
   xmlhttp.send(JSON.stringify(command));
 }
 
-function displayZoomBox(imgUrl)
+function displayZoomBox(imgUrl, width, height)
 {
   hideInfoBox();
+  if (width > 0)
+  {
+    document.getElementById("zoomBox").style.marginLeft= -width/2 + "px";
+    document.getElementById("zoomBox").style.left= "50%";
+  }
+  else
+  {
+    document.getElementById("zoomBox").style.marginLeft= "0";
+    document.getElementById("zoomBox").style.left= "15px"
+  }
   document.getElementById("zoomImage").src = imgUrl;
 }
 
@@ -284,7 +294,7 @@ function openURL(element)
   window.open(element.innerText);
 }
 
-function zoom(url)
+function zoom(url, width, height)
 {
-  displayZoomBox(url);
+  displayZoomBox(url, width, height);
 }
