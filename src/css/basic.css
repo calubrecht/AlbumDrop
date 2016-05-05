@@ -32,3 +32,9 @@ div#imageInfoError {display:none; color:red}
 
 div#zoomBox {display:none; position:absolute; top:15px; left:15px;  border-style:inset; border-width:4px; border-color:dark-grey; z-index: 50; background:rgba(0,0,0, .5); padding:5px; }
 div#zoomBox div {margin :5px}
+
+@media only screen and (max-device-width:480px)
+{
+  div.tabBody.narrow {width:300px}
+  div#body {position:absolute; top:50%; left:50%; margin-left :-157px; margin-top:-50px} 
+]
