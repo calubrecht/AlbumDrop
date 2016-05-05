@@ -11,14 +11,18 @@ $error = "";
 $postData = file_get_contents("php://input");
 if (isset($_GET["action"]))
 {
+  if (isset($_GET["id"]))
+  {
+    $id = preg_replace('/\\.[^.\\s]{3,4}$/', '', $_GET["id"]);
+  }
   if ($_GET["action"] == "display")
   {
-    getFileByID($_GET["id"]);
+    getFileByID($id);
     die();
   }
   if ($_GET["action"] == "thumb")
   {
-    getFileByID($_GET["id"], true);
+    getFileByID($id);
     die();
   }
 }

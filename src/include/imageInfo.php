@@ -64,7 +64,7 @@ function createThumbnail($srcFile, $destFile, $destX, $destY)
   if ($width <= $destX && $height <= $destY)
   {
     // No need for a thumbnail
-    $res = ["height"=>$height, "width"=>$width, "thumbHeight"=>$height, "thumbWidth"=>$width, "oneFile"=>true];
+    $res = ["height"=>$height, "width"=>$width, "thumbHeight"=>$height, "thumbWidth"=>$width, "oneFile"=>true, "mimeType"=>$mimeType];
     return $res;
   }
   $newHeight = floor ($height * ($destX / $width));
@@ -90,14 +90,14 @@ function createThumbnail($srcFile, $destFile, $destX, $destY)
   {
     imagegif($newImage, $destFile);
   }
-  $res = ["height"=>$height, "width"=>$width, "thumbHeight"=>$newHeight, "thumbWidth"=>$newWidth];
+  $res = ["height"=>$height, "width"=>$width, "thumbHeight"=>$newHeight, "thumbWidth"=>$newWidth, "mimeType"=>$mimeType];
   return $res;
 }
 
 function getImgInfo($imgId)
 {
   global $db;
-  $imgInfo = $db->queryOneRow("SELECT originalName, fullName as ownerName, isPublic, isVisible  FROM images, users WHERE images.id=? and images.owner=users.idusers", "$imgId");
+  $imgInfo = $db->queryOneRow("SELECT originalName, fullName as ownerName, isPublic, isVisible, $extension  FROM images, users WHERE images.id=? and images.owner=users.idusers", "$imgId");
   return $imgInfo;
 }
 
@@ -168,7 +168,7 @@ function deleteImg($imageId)
 function getImgInfoJson($imgId)
 {
   global $AD_CONFIG;
-  $imgInfo = getImgINfo($imgId);
+  $imgInfo = getImgInfo($imgId);
   if (!$imgInfo)
   {
     $ret = array();
@@ -185,10 +185,27 @@ function getImgInfoJson($imgId)
   $ret["imageName"] = $imgInfo["originalName"];
   $ret["isPublic"] = $imgInfo["isPublic"];
   $ret["isVisible"] = $imgInfo["isVisible"];
-  $ret["directLink"] = $SiteRoot."images/".$imgId;
-  $ret["thumbLink"] = $SiteRoot."thumbs/".$imgId;
+  $ret["directLink"] = $SiteRoot."images/".$imgId.$ret["extension"];
+  $ret["thumbLink"] = $SiteRoot."thumbs/".$imgId.$ret["extension"];
   $ret["success"] = true;
   return json_encode($ret);
+}
+
+function getExtension($mimeType)
+{
+  if ($mimeType == "image/jpeg")
+  {
+    return ".jpg";
+  }
+  elseif ($mimeType == "image/png")
+  {
+    return ".png";
+  }
+  elseif ($mimeType == "image/gif")
+  {
+    reutn ".gif";
+  }
+  return "";
 }
 
 function uploadImage($fileName, $tmpFileName)
@@ -216,15 +233,15 @@ function uploadImage($fileName, $tmpFileName)
   if ($res == false)
   {
     $thumbFileName = $destFileName;
-    $res = ["height"=>null, "width"=>null, "thumbHeight"=>null, "thumbWidth"=>null];
+    $res = ["height"=>null, "width"=>null, "thumbHeight"=>null, "thumbWidth"=>null, "mimeType"=>""];
   }
   if (isset($res["oneFile"]))
   {
     $thumbFileName = $destFileName;
   }
-
+  $extension = getExtension($res["mimeType"]);
   $id = makeID();
-  if (!$db->execute("INSERT INTO images (id, fileLoc, thumbLoc, originalName, owner, height, width, thumbHeight, thumbWidth) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", array($id, $destFileName, $thumbFileName, $fileName, getCurrentUserId(), $res["height"], $res["width"], $res["thumbHeight"], $res["thumbWidth"])))
+  if (!$db->execute("INSERT INTO images (id, fileLoc, thumbLoc, originalName, owner, height, width, thumbHeight, thumbWidth, extension) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", array($id, $destFileName, $thumbFileName, $fileName, getCurrentUserId(), $res["height"], $res["width"], $res["thumbHeight"], $res["thumbWidth"], $extension)))
   {
     sendError("Upload failed. Database Error " . $db->error);
   }
