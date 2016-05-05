@@ -22,7 +22,7 @@ if (isset($_GET["action"]))
   }
   if ($_GET["action"] == "thumb")
   {
-    getFileByID($id);
+    getFileByID($id, true);
     die();
   }
 }

@@ -97,7 +97,7 @@ function createThumbnail($srcFile, $destFile, $destX, $destY)
 function getImgInfo($imgId)
 {
   global $db;
-  $imgInfo = $db->queryOneRow("SELECT originalName, fullName as ownerName, isPublic, isVisible, $extension  FROM images, users WHERE images.id=? and images.owner=users.idusers", "$imgId");
+  $imgInfo = $db->queryOneRow("SELECT originalName, fullName as ownerName, isPublic, isVisible, extension  FROM images, users WHERE images.id=? and images.owner=users.idusers", "$imgId");
   return $imgInfo;
 }
 
@@ -185,8 +185,8 @@ function getImgInfoJson($imgId)
   $ret["imageName"] = $imgInfo["originalName"];
   $ret["isPublic"] = $imgInfo["isPublic"];
   $ret["isVisible"] = $imgInfo["isVisible"];
-  $ret["directLink"] = $SiteRoot."images/".$imgId.$ret["extension"];
-  $ret["thumbLink"] = $SiteRoot."thumbs/".$imgId.$ret["extension"];
+  $ret["directLink"] = $SiteRoot."images/".$imgId.$imgInfo["extension"];
+  $ret["thumbLink"] = $SiteRoot."thumbs/".$imgId.$imgInfo["extension"];
   $ret["success"] = true;
   return json_encode($ret);
 }
@@ -203,7 +203,7 @@ function getExtension($mimeType)
   }
   elseif ($mimeType == "image/gif")
   {
-    reutn ".gif";
+    return ".gif";
   }
   return "";
 }
