@@ -217,7 +217,8 @@ function deleteImage(imgId)
         var response = JSON.parse(xmlhttp.responseText);
         if (response["success"])
         {
-          location.reload();
+          updateGallery("gallery");
+          return;
         }
         else
         { 
@@ -366,7 +367,7 @@ function doUpdateGallery(galleryId, imgInfo)
   {
     if (imgThumbIds.indexOf(imgs[j].id) == -1)
     {
-      gallery.removeNode(imgs[j]);
+      gallery.removeChild(imgs[j]);
     }
   }
 }
