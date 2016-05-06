@@ -118,7 +118,9 @@ function updateImageInfo()
         if (response["success"])
         {
           window.alert("Image Information Updated");
-          location.reload();
+          hideInfoBox();
+          updateGallery("gallery");
+          return;
         }
         else
         { 
@@ -297,4 +299,74 @@ function openURL(element)
 function zoom(url, width, height)
 {
   displayZoomBox(url, width, height);
+}
+
+function updateGallery(gallery)
+{
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange= function()
+  {
+    if (xmlhttp.readyState == 4 && xmlhttp.status==200)
+    {
+      try
+      {
+        var response = JSON.parse(xmlhttp.responseText);
+        if (!response["success"])
+        {
+          // err
+        }
+        else
+        { 
+          doUpdateGallery(gallery+"Tab", response["data"]);
+        }
+      }
+      catch (e)
+      {
+        //err  
+      }
+    }
+  };
+  var command =  {};
+  command["action"] = "updateGallery";
+  command["gallery"] = gallery;
+  xmlhttp.open("POST", "", true);
+  xmlhttp.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+  xmlhttp.send(JSON.stringify(command));
+}
+
+function doUpdateGallery(galleryId, imgInfo)
+{
+  var gallery = document.getElementById(galleryId);
+  imgThumbIds = [];
+  for (var i = 0 ; i < imgInfo.length; i++)
+  {
+    var divId = imgInfo[i]["imgDivID"];
+    imgThumbIds[i] = divId;
+    var box = document.getElementById(divId);
+    var logoutButton = document.getElementsByClassName("LogoutButton")[0];
+    if (box == null)
+    {
+      box = document.createElement("span");
+      box.className="imgThumb";
+      box.id=divId;
+      box.innerHTML = imgInfo[i]["html"];
+      gallery.insertBefore(box, logoutButton);
+    }
+    else
+    {
+      var fileName = imgInfo[i]["fileName"];
+      box.getElementsByClassName("fileName")[0].innerText = fileName;
+      box.getElementsByClassName("fileName")[0].title = fileName;
+      box.getElementsByClassName("mainImage")[0].childNodes[0].alt = fileName;
+    }
+ 
+  }
+  imgs = document.getElementsByClassName("imgThumb");
+  for (var j = 0; j < imgs.length; j++)
+  {
+    if (imgThumbIds.indexOf(imgs[j].id) == -1)
+    {
+      gallery.removeNode(imgs[j]);
+    }
+  }
 }

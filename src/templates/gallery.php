@@ -2,7 +2,7 @@
 
 require_once("functions.php");
 require_once("imgFuncs.php");
-html_header("Gallery")
+html_header("Gallery", "onload=\"updateGallery('gallery')\"");
 ?>
 <h1>Welcome <?php echo $user; ?>!</h1>
 <div class="navBar"><span class="tab active" onClick="pickTab('galleryTab')">Gallery</span><span class="tab" onClick="pickTab('uploadTab')">Upload</span></div>
@@ -10,10 +10,6 @@ html_header("Gallery")
   <?= getInfoBox() ?>
   <?= getZoomBox() ?>
   <div id="galleryError" class="error"></div>
-  <?php foreach (getUserImages(getCurrentUserId()) as $imgId)
-  {
-    imgThumb($imgId);
-  } ?>
   <form class="LogoutButton" action="" method="post" >
   <div><input type="submit" name="logout" value="Logout"></div>
   </form>

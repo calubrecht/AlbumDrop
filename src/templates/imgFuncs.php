@@ -25,8 +25,8 @@ function getZoomBox()
    </form>
    </div>";
 }
-
-function imgThumb($imgId)
+ 
+function getImgThumbInfo($imgId)
 {
   global $AD_CONFIG;
   global $db;
@@ -37,10 +37,15 @@ function imgThumb($imgId)
   $height = isset($imgInfo["height"]) ? $imgInfo["height"] : 0;
   $extension = $imgInfo["extension"];
 
-  echo "<span class=\"imgThumb\">
-   <div class=\"thumb\"><div class=\"mainImage\"><img  src=\"thumbs/$imgId$extension\" alt=\"$fileName\"></div><div class=\"overlay\"><img src=\"ad_icons\\delete.png\" class=\"icon\" title=\"Delete image\" onclick=\"deleteImage('$imgId')\"><img src=\"ad_icons\\info.png\" onclick=\"displayInfoBox('$imgId')\" class=\"icon\" title=\"Image Info\"><img src=\"ad_icons\\magnify.png\" onclick=\"zoom('images/$imgId', $width, $height)\" class=\"icon\"></div></div>
+  $html = "<div class=\"thumb\"><div class=\"mainImage\"><img  src=\"thumbs/$imgId$extension\" alt=\"$fileName\"></div><div class=\"overlay\"><img src=\"ad_icons\\delete.png\" class=\"icon\" title=\"Delete image\" onclick=\"deleteImage('$imgId')\"><img src=\"ad_icons\\info.png\" onclick=\"displayInfoBox('$imgId')\" class=\"icon\" title=\"Image Info\"><img src=\"ad_icons\\magnify.png\" onclick=\"zoom('images/$imgId', $width, $height)\" class=\"icon\"></div></div>
    <div class=\"fileName\" title=\"$fileName\">$fileName</div>
-   <div class=\"fileOwner\">owner: $owner</div></span>";
+   <div class=\"fileOwner\">owner: $owner</div>";
+
+   $item = array();
+   $item["imgDivID"] = "box".$imgId;
+   $item["html"] = $html;
+   $item["fileName"] = $fileName; 
+   return $item;
 }
 
 

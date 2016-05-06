@@ -213,6 +213,10 @@ function uploadImage($fileName, $tmpFileName)
   global $db; 
   $fileName = scrubName($fileName);
   $destFileName = "data/images/".$fileName;
+  if ($tmpFileName == "")
+  {
+    sendError("Error uploading file");
+  }
   $mimeType = mime_content_type($tmpFileName);
   if (substr($mimeType,0,6) != "image/")
   {

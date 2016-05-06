@@ -4,6 +4,7 @@ require_once("include/config.php");
 require_once("include/funcs.php");
 require_once("include/user.php");
 require_once("include/imageInfo.php");
+require_once("templates/imgFuncs.php");
 session_start();
 
 $loggedIn = false;
@@ -102,6 +103,16 @@ else if ($postData != "")
     if ($data["action"] == "delete")
     {
       echo deleteImg($data["imgId"]);
+      die();
+    }
+    if ($data["action"] == "updateGallery")
+    {
+      $items = array();
+      foreach (getUserImages(getCurrentUserId()) as $imgId)
+      {
+        array_push($items, getImgThumbInfo($imgId));
+      }
+      echo json_encode(["success"=>true, "data"=>$items]);
       die();
     }
   }
