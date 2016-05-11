@@ -350,6 +350,7 @@ function doUpdateGallery(galleryId, imgInfo)
       box = document.createElement("span");
       box.className="imgThumb";
       box.id=divId;
+      box.draggable = "true";
       box.innerHTML = imgInfo[i]["html"];
       gallery.insertBefore(box, logoutButton);
     }
