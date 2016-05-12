@@ -19,7 +19,7 @@ $AD_CONFIG["DB_PORT"] = "3306";
 $AD_CONFIG["DB_USER"] = "";
 $AD_CONFIG["DB_PASSWORD"] = "";
 
-$AD_CONFIG["FAV_ICON"] = "ad_icons/favicon.ico";
+$AD_CONFIG["FAV_ICON"] = "ad_icons/favicon.png";
 $AD_CONFIG["BANNER"] = "ad_icons/AD.png";
 $AD_CONFIG["BANNER_NAME"] = "Album Drop";
 
