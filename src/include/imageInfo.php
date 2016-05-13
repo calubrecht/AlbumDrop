@@ -208,7 +208,7 @@ function getExtension($mimeType)
   return "";
 }
 
-function uploadImage($fileName, $tmpFileName)
+function uploadImage($fileName, $tmpFileName, $isVisible)
 {
   global $db; 
   $fileName = scrubName($fileName);
@@ -245,7 +245,8 @@ function uploadImage($fileName, $tmpFileName)
   }
   $extension = getExtension($res["mimeType"]);
   $id = makeID();
-  if (!$db->execute("INSERT INTO images (id, fileLoc, thumbLoc, originalName, owner, height, width, thumbHeight, thumbWidth, extension) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", array($id, $destFileName, $thumbFileName, $fileName, getCurrentUserId(), $res["height"], $res["width"], $res["thumbHeight"], $res["thumbWidth"], $extension)))
+  $isVisibleInt = $isVisible ? 1 : 0;
+  if (!$db->execute("INSERT INTO images (id, fileLoc, thumbLoc, originalName, isVisible, owner, height, width, thumbHeight, thumbWidth, extension) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", array($id, $destFileName, $thumbFileName, $fileName, $isVisibleInt, getCurrentUserId(), $res["height"], $res["width"], $res["thumbHeight"], $res["thumbWidth"], $extension)))
   {
     sendError("Upload failed. Database Error " . $db->error);
   }

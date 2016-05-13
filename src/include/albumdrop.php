@@ -68,7 +68,7 @@ else if (isset($_POST["uploadFiles"]))
   {
     for ($index = 0; $index < count($files["name"]); $index++)
     {
-      uploadImage($files["name"][$index], $files["tmp_name"][$index]);
+      uploadImage($files["name"][$index], $files["tmp_name"][$index], $_POST["isVisible"]);
     }
   }
   else
@@ -79,7 +79,7 @@ else if (isset($_POST["uploadFiles"]))
       if ($err == 1 || $err = 2) sendError("Upload failed. File too large.");
       if ($err > 2) sendError("Upload failed. Unknown error.");
     }
-    uploadImage($files["name"], $files["tmp_name"]);
+    uploadImage($files["name"], $files["tmp_name"], $_POST["isVisible"]);
   }
   refreshPage();
 }
