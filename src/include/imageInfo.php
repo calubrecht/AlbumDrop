@@ -233,7 +233,6 @@ function uploadImage($fileName, $tmpFileName, $isVisible)
     $thumbFileName = $thumbFileName . "1";
   }
   $res = createThumbnail($destFileName, $thumbFileName, 100, 100);
-  logwrite(json_encode($res));
   if ($res == false)
   {
     $thumbFileName = $destFileName;

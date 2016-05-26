@@ -2,7 +2,7 @@
 
 function logwrite($info)
 {
-  $file = fopen("debug.log","a");
+  $file = fopen("log/debug.log","a");
   fwrite($file,$info);
   fwrite($file,"\n");
   fclose($file);
