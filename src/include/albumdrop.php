@@ -5,6 +5,8 @@ require_once("include/funcs.php");
 require_once("include/user.php");
 require_once("include/imageInfo.php");
 require_once("templates/imgFuncs.php");
+ini_set("session.gc_maxlifetime", 30*86400);  // PHP Session lifetime (30 days)
+ini_set("session.cookie_lifetime", 30*86400);  // PHP Session cookie lifetime
 session_start();
 
 $loggedIn = false;
