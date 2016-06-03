@@ -30,7 +30,15 @@ function setUser($user, $userId)
 function register($userData)
 {
   global $db; 
+  global $AD_CONFIG; 
   $ret = array();
+  if (!$AD_CONFIG["ALLOW_REGISTRATION"])
+  {
+    $ret["success"] = false;
+    $ret["error"] = "Registration at this site is currently disabled.";
+    echo json_encode($ret);
+    die();
+  }
   $user = $userData["username"];
   $displayName = $userData["displayName"];
   $pw = $userData["password"];

@@ -1,10 +1,12 @@
 <?php
 
 require_once("functions.php");
-html_header("Login")
+html_header("Login");
+
+$showRegister = $AD_CONFIG["ALLOW_REGISTRATION"];
 ?>
 <div id="Body">
-<div class="navBar"><span class="tab active" onClick="pickTab('loginTab')">Login</span> <span class="tab" onClick="pickTab('registerTab')">Register</span></div>
+<div class="navBar"><span class="tab active" onClick="pickTab('loginTab')">Login</span><?php if ($showRegister) print "<span class=\"tab\" onClick=\"pickTab('registerTab')\">Register</span>" ?></div>
 <div id = "loginTab" class="tabBody narrow">
   <div class="error" id="loginError"><?php echo $error; ?></div>
   <form action="" method="post" >
@@ -14,7 +16,10 @@ html_header("Login")
   </form>
 </div>
 <?php
-require_once("templates/register.php");
+if ($showRegister)
+{
+  require_once("templates/register.php");
+}
 echo "</div>";
 html_footer();
 ?>
