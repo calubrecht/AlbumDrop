@@ -372,3 +372,40 @@ function doUpdateGallery(galleryId, imgInfo)
     }
   }
 }
+
+function showHelpBox(event, element, category)
+{
+  event = event || window.event;
+  hideHelp();
+  if (category == "visible")
+  {
+    text = "Toggle whether to let the world see this image if they have the line.";
+  }
+  else
+  {
+    return;
+  }
+  helpBox = document.createElement("span");
+  helpBox.innerHTML = text;
+  helpBox.className = 'helpBox';
+  helpBox.id = 'helpBox';
+  helpBox.onclick = hideHelp;
+  element.appendChild(helpBox);
+  document.onclick = hideHelp;
+  event.stopPropagation();
+  return false;
+}
+
+function hideHelp(event)
+{
+  var oldBox = document.getElementById("helpBox");
+  if (oldBox != null)
+  {
+    oldBox.parentNode.removeChild(oldBox);
+  }
+  document.onclick = null;
+  if (event)
+  {
+    event.stopPropagation();
+  }
+}

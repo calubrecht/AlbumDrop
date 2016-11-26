@@ -23,10 +23,13 @@ span.imgThumb div.fileOwner { width: 90px ; font-style:italic }
 .firstColumn {width:30%; float: left; text-align:right; clear:left}
 .secondColumn {width:65%; float: left; margin: 0px 0px 8px 10px;  }
 .secondColumnCheck {float: left; margin: 0px 0px 8px 10px; text-align:left; }
+.helpIcon {margin-left: 35px; top:5px; position:relative}
+.helpBox {z-index:1000; position:absolute; top:-10px; left:-10px; background:lightblue;
+border-style:solid; border-width:1px; border-color:black; border-radius:15px; padding:10px; width:220px}
 
 div#galleryTab form.LogoutButton {clear:both}
 div.spacer {clear:both}
-.center {margin-left: auto; margin-right: auto; display:block}
+.center {margin-left: auto; margin-right: auto; display:block;}
 
 #uploadForm {background:rgb(220,220,220); margin-left:auto; margin-right:auto; width:400px; border-radius:15px; margin-top:15px; border-style:solid; border-width: 1px; border-color:rgb(220,220,200)}
 
