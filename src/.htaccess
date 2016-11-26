@@ -14,7 +14,7 @@ RedirectMatch 404 ^/templates/.*$
 RedirectMatch 404 ^/data/.*$
 # Don't expose our debug.log, if we forget to remove log-commands
 # before production
-RedirectMatch 404 ^/debug.log$
+RedirectMatch 404 ^/log/debug.log$
 
 ErrorDocument 404 /404.php
 ErrorDocument 403 /403.php
