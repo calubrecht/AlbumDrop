@@ -4,7 +4,7 @@ function getUserImages($ownerId)
 {
   global $db; 
   $results =
-    $db->queryAll("SELECT id FROM images WHERE owner=?", $ownerId);
+    $db->queryAll("SELECT id FROM images WHERE owner=? order by imageTS DESC", $ownerId);
   $ret = array();
   foreach ($results as $row)
   {
