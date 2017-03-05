@@ -120,7 +120,7 @@ else if ($postData != "")
       }
       foreach ($imgs as $imgId)
       {
-        array_push($items, getImgThumbInfo($imgId));
+        array_push($items, getImgThumbInfo($imgId, $data["gallery"]));
       }
       echo json_encode(["success"=>true, "data"=>$items]);
       die();

@@ -26,18 +26,20 @@ function getZoomBox()
    </div>";
 }
  
-function getImgThumbInfo($imgId)
+function getImgThumbInfo($imgId, $gallery)
 {
   global $AD_CONFIG;
   global $db;
-  $imgInfo = $db->queryOneRow("SELECT originalName, width, height, fullName as ownerName, isPublic, isVisible, extension  FROM images, users WHERE images.id=? and images.owner=users.idusers", "$imgId");
+  $imgInfo = $db->queryOneRow("SELECT originalName, width, height, fullName as ownerName, isPublic, isVisible, extension, owner as ownerId FROM images, users WHERE images.id=? and images.owner=users.idusers", "$imgId");
   $fileName = $imgInfo["originalName"];
   $owner = $imgInfo["ownerName"];
   $width = isset($imgInfo["width"]) ? $imgInfo["width"] : 0;
   $height = isset($imgInfo["height"]) ? $imgInfo["height"] : 0;
   $extension = $imgInfo["extension"];
 
-  $html = "<div class=\"thumb\"><div class=\"mainImage\"><img  src=\"thumbs/$imgId$extension\" alt=\"$fileName\"></div><div class=\"overlay\"><img src=\"ad_icons\\delete.png\" class=\"icon\" title=\"Delete image\" onclick=\"deleteImage('$imgId')\"><img src=\"ad_icons\\info.png\" onclick=\"displayInfoBox('$imgId')\" class=\"icon\" title=\"Image Info\"><img src=\"ad_icons\\magnify.png\" onclick=\"zoom('images/$imgId', $width, $height)\" class=\"icon\"></div></div>
+  $deleteBtn = $imgInfo["ownerId"] == getCurrentUserId() ?  "<img src=\"ad_icons\\delete.png\" class=\"icon\" title=\"Delete image\" onclick=\"deleteImage('$imgId', '$gallery')\">" : "";
+
+  $html = "<div class=\"thumb\"><div class=\"mainImage\"><img  src=\"thumbs/$imgId$extension\" alt=\"$fileName\"></div><div class=\"overlay\">" . $deleteBtn ."<img src=\"ad_icons\\info.png\" onclick=\"displayInfoBox('$imgId')\" class=\"icon\" title=\"Image Info\"><img src=\"ad_icons\\magnify.png\" onclick=\"zoom('images/$imgId', $width, $height)\" class=\"icon\"></div></div>
    <div class=\"fileName\" title=\"$fileName\">$fileName</div>
    <div class=\"fileOwner\">owner: $owner</div>";
 

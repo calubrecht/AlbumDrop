@@ -141,6 +141,7 @@ function updateImageInfo()
           window.alert("Image Information Updated");
           hideInfoBox();
           updateGallery("gallery");
+          updateGallery("public");
           return;
         }
         else
@@ -220,9 +221,9 @@ function register()
   }
 }
 
-function deleteImage(imgId)
+function deleteImage(imgId, gallery)
 {
-  document.getElementById("galleryError").style.display="none";
+  document.getElementById(gallery + "Error").style.display="none";
   var yesno = window.confirm("Are you sure you want to delete this image?");
   if (yesno == false)
   {
@@ -239,19 +240,20 @@ function deleteImage(imgId)
         if (response["success"])
         {
           updateGallery("gallery");
+          updateGallery("public");
           return;
         }
         else
         { 
-          document.getElementById("galleryError").style.display="block";
-          document.getElementById("galleryError").innerText = response["error"];
+          document.getElementById(gallery + "Error").style.display="block";
+          document.getElementById(gallery + "Error").innerText = response["error"];
         }
       }
       catch (e)
       {
         
-        document.getElementById("galleryError").style.display="block";
-        document.getElementById("galleryError").innerText = xmlhttp.responseText;
+        document.getElementById(gallery + "Error").style.display="block";
+        document.getElementById(gallery + "Error").innerText = xmlhttp.responseText;
       }
     }
   };
@@ -384,7 +386,7 @@ function doUpdateGallery(galleryId, imgInfo)
     }
  
   }
-  imgs = document.getElementsByClassName("imgThumb");
+  imgs = gallery.getElementsByClassName("imgThumb");
   for (var j = 0; j < imgs.length; j++)
   {
     if (imgThumbIds.indexOf(imgs[j].id) == -1)
