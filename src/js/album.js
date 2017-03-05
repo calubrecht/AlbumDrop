@@ -1,5 +1,7 @@
 function pickTab(tab)
 {
+  hideZoomBox();
+  hideInfoBox();
   var tabBodies = document.getElementsByClassName('tabBody');
   var tabs = document.getElementsByClassName('tab');
   for (i = 0; i < tabs.length; i++)
