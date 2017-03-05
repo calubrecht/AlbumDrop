@@ -110,7 +110,7 @@ function createThumbnail($srcFile, $destFile, $destX, $destY)
 function getImgInfo($imgId)
 {
   global $db;
-  $imgInfo = $db->queryOneRow("SELECT originalName, fullName as ownerName, isPublic, isVisible, extension  FROM images, users WHERE images.id=? and images.owner=users.idusers", "$imgId");
+  $imgInfo = $db->queryOneRow("SELECT originalName, fullName as ownerName, isPublic, isVisible, extension, owner as ownerId  FROM images, users WHERE images.id=? and images.owner=users.idusers", "$imgId");
   return $imgInfo;
 }
 
@@ -200,6 +200,7 @@ function getImgInfoJson($imgId)
   $ret["isVisible"] = $imgInfo["isVisible"];
   $ret["directLink"] = $SiteRoot."images/".$imgId.$imgInfo["extension"];
   $ret["thumbLink"] = $SiteRoot."thumbs/".$imgId.$imgInfo["extension"];
+  $ret["enableEdit"] = $imgInfo["ownerId"] == getCurrentUserId() ? 1 : 0;
   $ret["success"] = true;
   return json_encode($ret);
 }

@@ -67,11 +67,16 @@ function displayInfoBox(imgId)
         document.getElementById("imageInfoBox").style.display="block";
         if (response["success"])
         {
+          var enableEdit = response["enableEdit"] == 1;
           document.getElementById("ImageName").value = response["imageName"];
+          document.getElementById("ImageName").disabled = (enableEdit == 0);
           originalFileName = response["imageName"];
           visibleImgId = imgId;
           document.getElementById("IsPublic").checked = response["isPublic"] == 1;
+          document.getElementById("IsPublic").disabled = (enableEdit == 0);
           document.getElementById("IsVisible").checked = response["isVisible"] ==1;
+          document.getElementById("IsVisible").disabled = (enableEdit == 0);
+          document.getElementById("UpdateButton").style.display = (enableEdit == 1) ? "block" : "none";
           document.getElementById("DirectLink").innerText = response["directLink"];
           document.getElementById("ThumbnailLink").innerText = response["thumbLink"];
         }
