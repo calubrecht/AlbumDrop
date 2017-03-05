@@ -110,7 +110,15 @@ else if ($postData != "")
     if ($data["action"] == "updateGallery")
     {
       $items = array();
-      foreach (getUserImages(getCurrentUserId()) as $imgId)
+      if ($data["gallery"] == "public")
+      {
+        $imgs = getPublicImages();
+      }
+      else
+      {
+        $imgs = getUserImages(getCurrentUserId());
+      }
+      foreach ($imgs as $imgId)
       {
         array_push($items, getImgThumbInfo($imgId));
       }

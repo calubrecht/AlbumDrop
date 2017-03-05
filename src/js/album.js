@@ -6,14 +6,28 @@ function pickTab(tab)
   {
     if (tabBodies[i].id == tab)
     {
-      tabBodies[i].style.display = 'block';
+      //tabBodies[i].style.display = 'block';
+      tabBodies[i].className = "tabBody";
       tabs[i].className = "tab active";
     }
     else
     {
-      tabBodies[i].style.display = 'none';
+      //tabBodies[i].style.display = 'none';
+      tabBodies[i].className = "tabBody hidden";
       tabs[i].className = "tab";
     }
+  }
+}
+
+var publicTabLoaded = 0;
+
+function pickAndLoadTab(tab)
+{
+  pickTab(tab);
+  if (publicTabLoaded == 0)
+  {
+    publicTabLoaded = 1;
+    updateGallery("public");
   }
 }
 
@@ -341,10 +355,10 @@ function doUpdateGallery(galleryId, imgInfo)
   imgThumbIds = [];
   for (var i = 0 ; i < imgInfo.length; i++)
   {
-    var divId = imgInfo[i]["imgDivID"];
+    var divId = galleryId + "_" + imgInfo[i]["imgDivID"];
     imgThumbIds[i] = divId;
     var box = document.getElementById(divId);
-    var logoutButton = document.getElementsByClassName("LogoutButton")[0];
+    var logoutButton = gallery.getElementsByClassName("LogoutButton")[0];
     if (box == null)
     {
       box = document.createElement("span");
