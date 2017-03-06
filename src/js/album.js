@@ -288,12 +288,20 @@ function showZoombox()
 
 function hideInfoBox()
 {
+  if (!document.getElementById("zoomBox"))
+  {
+    return;
+  }
   document.getElementById("imageInfoBox").style.display="none";
   clearInfoBox();
 }
 
 function hideZoomBox()
 {
+  if (!document.getElementById("zoomBox"))
+  {
+    return;
+  }
   document.getElementById("zoomBox").style.display="none";
   document.getElementById("zoomImage").src = "";
 }
