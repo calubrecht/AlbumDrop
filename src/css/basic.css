@@ -28,6 +28,7 @@ span.imgThumb div.fileOwner { width: 160px ; font-style:italic }
 border-style:solid; border-width:1px; border-color:black; border-radius:15px; padding:10px; width:220px}
 
 div.tabBody form.LogoutButton {clear:both}
+input.RegisterButton {clear:both}
 div.spacer {clear:both}
 .center {margin-left: auto; margin-right: auto; display:block;}
 

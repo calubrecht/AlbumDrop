@@ -6,16 +6,19 @@ function pickTab(tab)
   var tabs = document.getElementsByClassName('tab');
   for (i = 0; i < tabs.length; i++)
   {
+    var baseClass = tabBodies[i].className.includes("narrow") ?
+      "tabBody narrow" :
+      "tabBody";
     if (tabBodies[i].id == tab)
     {
       //tabBodies[i].style.display = 'block';
-      tabBodies[i].className = "tabBody";
+      tabBodies[i].className = baseClass;
       tabs[i].className = "tab active";
     }
     else
     {
       //tabBodies[i].style.display = 'none';
-      tabBodies[i].className = "tabBody hidden";
+      tabBodies[i].className = baseClass + " hidden";
       tabs[i].className = "tab";
     }
   }

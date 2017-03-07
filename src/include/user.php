@@ -42,10 +42,11 @@ function register($userData)
   $user = $userData["username"];
   $displayName = $userData["displayName"];
   $pw = $userData["password"];
+  $email = $userData["email"];
   $pwHash = password_hash($pw, PASSWORD_DEFAULT);
   try
   {
-    $res = $db->execute("INSERT into users (login, pwHash, fullName, isAdmin) VALUES (?, ?, ?, 0)", array($user, $pwHash, $displayName));
+    $res = $db->execute("INSERT into users (login, pwHash, fullName, email, isAdmin) VALUES (?, ?, ?, ?, 0)", array($user, $pwHash, $displayName, $email));
     if (!$res)
     {
       if ($db->errorCode == 23000)
