@@ -11,6 +11,7 @@ session_start();
 
 $loggedIn = false;
 $error = "";
+$forgotPassword = false;
 $postData = file_get_contents("php://input");
 if (isset($_GET["action"]))
 {
@@ -57,6 +58,7 @@ elseif (isset($_POST["username"]))
   else
   {
     $error = "Incorrect Credentials";
+    $forgotPassword = true;
   }
 }
 else if (isset($_POST["uploadFiles"]))
@@ -100,6 +102,11 @@ else if ($postData != "")
     if ($data["action"] == "register")
     {
       register($data);
+      die();
+    }
+    if ($data["action"] == "resetPassword")
+    {
+      resetPassword($data);
       die();
     }
     if ($data["action"] == "delete")

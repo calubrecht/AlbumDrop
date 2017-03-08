@@ -95,4 +95,25 @@ function sendError($errorText)
   echo $errorText;
   die();
 }
+
+$alpha = array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z');
+$numChar = array('0','1','2','3','4','5','6','7','8','9');
+
+
+function makeID($numAlphas = 5, $numNums = 6)
+{
+  global $alpha;
+  global $numChar;
+  $id ='';
+  for ($i = 0; $i < $numAlphas; $i++)
+  {
+    $id = $id . $alpha[rand(0,25)];
+  }
+  for ($i = 0; $i < $numNums; $i++)
+  {
+    $id = $id . $numChar[rand(0,9)];
+  }
+  return $id; 
+}
+
 ?>

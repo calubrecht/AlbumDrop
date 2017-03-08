@@ -23,6 +23,7 @@ $AD_CONFIG["FAV_ICON"] = "ad_icons/favicon.png";
 $AD_CONFIG["BANNER"] = "ad_icons/AD.png";
 $AD_CONFIG["BANNER_NAME"] = "Album Drop";
 
+$AD_CONFIG["PASSWORD_RECOVERY_FROM"] = "passwordRecovery@albumdrop";
 $AD_CONFIG["ALLOW_REGISTRATION"] = true;
 
 if(file_exists("include/config_local.php"))

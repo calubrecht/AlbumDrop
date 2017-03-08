@@ -224,6 +224,56 @@ function register()
   }
 }
 
+function resetPassword()
+{
+  var form = document.getElementById("passwordForm");
+  var formData = {};
+  var inputs = form.getElementsByTagName("input");
+  for (i = 0; i < inputs.length; i++)
+  {
+    formData[inputs[i].name] = inputs[i].value;
+  }
+  var errorBox = document.getElementById("passwordError");
+  var infoBox = document.getElementById("passwordInfo");
+  if (formData["username"] == "")
+  {
+    errorBox.innerText = "Please enter a username";
+    infoBox.innerText = "";
+  }
+  else
+  {
+    errorBox.innerText = "";
+    infoBox.innerText = "";
+    formData["action"] = "resetPassword";
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange= function()
+    {
+      if (xmlhttp.readyState == 4 && xmlhttp.status==200)
+      {
+        try
+        {
+          var response = JSON.parse(xmlhttp.responseText);
+          if (response["success"])
+          {
+            infoBox.innerText = response["message"];
+          }
+          else
+          {
+            errorBox.innerText = response["error"];
+          }
+        }
+        catch (e)
+        {
+          errorBox.innerText = xmlhttp.responseText;
+        }
+      }
+    };
+    xmlhttp.open("POST", "", true);
+    xmlhttp.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+    xmlhttp.send(JSON.stringify(formData));
+  }
+}
+
 function deleteImage(imgId, gallery)
 {
   document.getElementById(gallery + "Error").style.display="none";
@@ -442,4 +492,11 @@ function hideHelp(event)
   {
     event.stopPropagation();
   }
+}
+
+function forgotPassword()
+{
+  var passwordTab = document.getElementById("passwordTabHead");
+  passwordTab.style.display="inline";
+  pickTab("passwordTab");
 }
