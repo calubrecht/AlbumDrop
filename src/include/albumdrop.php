@@ -29,6 +29,19 @@ if (isset($_GET["action"]))
     getFileByID($id, true);
     die();
   }
+  if ($_GET["action"] == "resetPassword")
+  {
+    $username = getUsernameFromToken($_GET["token"]);
+    if (!$username)
+    {
+      require_once("templates/expiredToken.php");
+      die();
+    }
+    $token= $_GET["token"];
+    $_SESSION["token"] = $token;
+    require_once("templates/resetPassword.php");
+    die();
+  }
 }
 elseif (isset($_GET["getInfo"]))
 {

@@ -77,12 +77,32 @@ function register($userData)
 }
 
 
-function sendRecoveryEmail($email)
+function sendRecoveryEmail($user, $email)
 {
+  global $db; 
   global $AD_CONFIG; 
+  $db->beginTransaction();
+  $res = $db->queryAll("SELECT userID from passwordTokens where userID=? and timestamp > CURRENT_TIMESTAMP() - INTERVAL 2 MINUTE ", ($user ));
+  if ($res && count($res) > 0)
+  {
+    $ret["success"] = false;
+    $ret["error"] = "An email has been sent for this count recently, please be patient.";
+    $db->rollbackTransaction();
+    echo json_encode($ret);
+    die();
+  }
   $fromAddress = $AD_CONFIG["PASSWORD_RECOVERY_FROM"];
   $headers = "From: " . $fromAddress;
   $passwordToken = makeID(25, 0);
+  $res = $db->execute("REPLACE INTO passwordTokens (userID, token, timestamp) VALUES (?, ?, CURRENT_TIMESTAMP())", array($user, $passwordToken));
+  if (!$res)
+  {
+    $ret["success"] = false;
+    $ret["error"] = "SQL Error: " . $db->error;
+    $db->rollbackTransaction();
+    echo json_encode($ret);
+    die();
+  }
   mail(
     $email,
     "Password Recovery for " .$AD_CONFIG["BANNER_NAME"],
@@ -90,8 +110,23 @@ function sendRecoveryEmail($email)
       $AD_CONFIG["BANNER_NAME"] . " if this was not you, " .
       "you do not need to take any action.\n" .
       "If you do wish to reset your password, follow the link below.\n" .
-      $AD_CONFIG["host"] . '/resetPassword/' . $passwordToken,
+      $AD_CONFIG["host"] . '/resetPassword/' . $passwordToken ,
     $headers);
+  $db->commitTransaction();
+}
+
+function getUsernameFromToken($token)
+{
+  global $db; 
+  global $AD_CONFIG; 
+  $db->beginTransaction();
+  $res = $db->queryAll("SELECT login, idusers FROM users, passwordTokens WHERE token=? and userID=idusers and timestamp > CURRENT_TIMESTAMP - INTERVAL 5 MINUTE", $token);
+  if ($res && count($res) == 0)
+  {
+    return false;
+  }
+  $db->commitTransaction();
+  return $res[0]["login"];
 }
 
 function resetPassword($userData)
@@ -102,13 +137,13 @@ function resetPassword($userData)
   $user = $userData["username"];
   try
   {
-    $res = $db->queryAll("SELECT login, email from users where login=?", $user);
+    $res = $db->queryAll("SELECT login, email, idUsers from users where login=?", $user);
     if ($res && count($res) > 0)
     {
       $row = $res[0];
       if ($row["email"] && $row["email"] != "")
       {
-        sendRecoveryEmail($row["email"]);
+        sendRecoveryEmail($row["idUsers"], $row["email"]);
         $ret["success"] = true;
         $ret["message"] =
           "An email has been sent to the email associated with this account";

@@ -24,11 +24,23 @@ CREATE TABLE IF NOT EXISTS `users` (
   `pwHash` varchar(80) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
+CREATE TABLE IF NOT EXISTS `passwordTokens` (
+  `userID` int(11) NOT NULL,
+  `token` varchar(30) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 ALTER TABLE `images`
  ADD PRIMARY KEY (`id`), ADD KEY `ownerKey` (`owner`);
 
 ALTER TABLE `users`
  ADD PRIMARY KEY (`idusers`), ADD UNIQUE KEY `login_UNIQUE` (`login`);
 
+ALTER TABLE `passwordTokens`
+ ADD PRIMARY KEY (`userID`);
+
 ALTER TABLE `images`
 ADD CONSTRAINT `ownerKey` FOREIGN KEY (`owner`) REFERENCES `users` (`idusers`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE `passwordTokens`
+ADD CONSTRAINT `passwordTokens_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`idusers`) ON DELETE CASCADE ON UPDATE CASCADE;

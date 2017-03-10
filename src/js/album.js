@@ -226,6 +226,10 @@ function register()
 
 function resetPassword()
 {
+}
+
+function sendPasswordLink()
+{
   var form = document.getElementById("passwordForm");
   var formData = {};
   var inputs = form.getElementsByTagName("input");

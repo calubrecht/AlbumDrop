@@ -9,6 +9,8 @@ RewriteRule ^images/(.*) index.php?action=display&id=$1
 
 RewriteRule ^thumbs/(.*) index.php?action=thumb&id=$1
 
+RewriteRule ^resetPassword/(.*) index.php?action=resetPassword&token=$1
+
 RedirectMatch 404 ^/include/.*$
 RedirectMatch 404 ^/templates/.*$
 RedirectMatch 404 ^/data/.*$
