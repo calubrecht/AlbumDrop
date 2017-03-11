@@ -122,6 +122,11 @@ else if ($postData != "")
       resetPassword($data);
       die();
     }
+    if ($data["action"] == "doResetPassword")
+    {
+      doResetPassword($data);
+      die();
+    }
     if ($data["action"] == "delete")
     {
       echo deleteImg($data["imgId"]);

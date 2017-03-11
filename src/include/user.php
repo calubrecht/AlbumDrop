@@ -21,8 +21,21 @@ function getLoginInfo($user)
   return $db->queryOneRow("SELECT pwHash, idusers  FROM users WHERE login=?", "$user");
 }
 
+function getUserFromID($id)
+{
+  global $db; 
+  return $db->queryOneRow("SELECT login  FROM users WHERE idusers=?", "$id")["login"];
+}
+
 function setUser($user, $userId)
 {
+  $_SESSION["user"] = $user;
+  $_SESSION["userID"] = $userId;
+}
+
+function setUserFromID($userId)
+{
+  $user = getUserFromID($userId);
   $_SESSION["user"] = $user;
   $_SESSION["userID"] = $userId;
 }
@@ -121,7 +134,7 @@ function getUsernameFromToken($token)
   global $AD_CONFIG; 
   $db->beginTransaction();
   $res = $db->queryAll("SELECT login, idusers FROM users, passwordTokens WHERE token=? and userID=idusers and timestamp > CURRENT_TIMESTAMP - INTERVAL 5 MINUTE", $token);
-  if ($res && count($res) == 0)
+  if (!$res || count($res) == 0)
   {
     return false;
   }
@@ -164,4 +177,74 @@ function resetPassword($userData)
   die();
 }
 
+function changePassword($userId, $password)
+{ 
+  global $db;
+  $pwHash = password_hash($password, PASSWORD_DEFAULT);
+  try
+  {
+    $res = $db->execute("UPDATE users SET pwHash=? WHERE idusers = ?", array($pwHash, $userId));
+    if (!$res)
+    {
+      logwrite("Error:  changePassword: " . $db->error);
+      return false;
+    }
+    $userName = getUserFromID($userId);
+    $userId2 = checkLogin($userName, $password);
+    return $userId == $userId2;
+  }
+  catch (exception $e)
+  {
+    logwrite("Error:  changePassword: " . $e.getMessage());
+    return false;
+  }
+  return true;
+}
+
+function doResetPassword($data)
+{
+  global $db; 
+  global $AD_CONFIG; 
+  $ret = array();
+  $error = false;
+  if ($_SESSION["token"] != $data["token"])
+  {
+    $error = "Your session is invalid, please refresh the page and try again..";
+  }
+  else
+  {
+    $res = $db->queryAll("SELECT userID from passwordTokens where token=? and timestamp > CURRENT_TIMESTAMP() - INTERVAL 10 MINUTE ", ($data["token"] ));
+    if (!$res || count($res) == 0)
+    {
+      $error = "Token not found or expire, please request a new password token.";
+    }
+    else
+    {
+      $userID = $res[0]["userID"];
+      $res = changePassword($userID, $data["password"]);
+      if (!$res)
+      {
+        $error = "An error occurred updating password.";
+      }
+      else
+      {
+        setUserFromID($userID);
+        $res = $db->execute("DELETE from passwordTokens where token=?", $data["token"]);
+      }
+    }
+  }
+  $ret = array();
+  if (!$error)
+  {
+    $ret["success"] = true;
+    $ret["redirect"] = $AD_CONFIG["host"];
+  }
+  else
+  {
+    $ret["success"] = false;
+    $ret["error"] = $error;
+  }
+  echo json_encode($ret);
+  die();
+}
 ?>

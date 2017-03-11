@@ -226,6 +226,53 @@ function register()
 
 function resetPassword()
 {
+  var form = document.getElementById("resetPasswordForm");
+  var formData = {};
+  var inputs = form.getElementsByTagName("input");
+  for (i = 0; i < inputs.length; i++)
+  {
+    formData[inputs[i].name] = inputs[i].value;
+  }
+  var errorBox = document.getElementById("resetPasswordError");
+  if (formData["password"] == "")
+  {
+    errorBox.innerText = "Please enter a password";
+  }
+  else if (formData["password"] != formData["confirmPassword"])
+  {
+    errorBox.innerText = "Password confirmation does not match."
+  }
+  else
+  {
+    errorBox.innerText = "";
+    formData["action"] = "doResetPassword";
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange= function()
+    {
+      if (xmlhttp.readyState == 4 && xmlhttp.status==200)
+      {
+        try
+        {
+          var response = JSON.parse(xmlhttp.responseText);
+          if (response["success"])
+          {
+            window.location = response["redirect"];
+          }
+          else
+          {
+            errorBox.innerText = response["error"];
+          }
+        }
+        catch (e)
+        {
+          errorBox.innerText = xmlhttp.responseText;
+        }
+      }
+    };
+    xmlhttp.open("POST", "/", true);
+    xmlhttp.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+    xmlhttp.send(JSON.stringify(formData));
+  }
 }
 
 function sendPasswordLink()
