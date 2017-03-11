@@ -13,7 +13,7 @@
   Someone has requested to reset your password for <?= $data["userName"] ?> at <b><i><?= $data["BANNER_NAME"] ?></i></b>  if this was not you, you do not need to take any action.
   </p>
   <p>
-  If you do wish to reset your password, follow the link below:
+  If you do wish to reset your password, follow the link below. This token will expire in 5 minutes:
   </p>
   <p>
   <a href="<?= $data["host"] ?>/resetPassword/<?= $data["passwordToken"] ?>">

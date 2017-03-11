@@ -163,7 +163,7 @@ function resetPassword($userData)
         sendRecoveryEmail($row["idUsers"], $row["login"], $row["email"]);
         $ret["success"] = true;
         $ret["message"] =
-          "An email has been sent to the email associated with this account";
+          "An email has been sent to the email associated with this account. It will only be valid for 5 minutes.";
         echo json_encode($ret);
         return;
       }
