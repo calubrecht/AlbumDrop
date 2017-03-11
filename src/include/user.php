@@ -90,7 +90,7 @@ function register($userData)
 }
 
 
-function sendRecoveryEmail($user, $email)
+function sendRecoveryEmail($user, $userName, $email)
 {
   global $db; 
   global $AD_CONFIG; 
@@ -105,7 +105,9 @@ function sendRecoveryEmail($user, $email)
     die();
   }
   $fromAddress = $AD_CONFIG["PASSWORD_RECOVERY_FROM"];
-  $headers = "From: " . $fromAddress;
+  $headers = "From: " . $fromAddress . "\r\n";
+  $headers .= "MIME-Version: 1.0\r\n";
+  $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
   $passwordToken = makeID(25, 0);
   $res = $db->execute("REPLACE INTO passwordTokens (userID, token, timestamp) VALUES (?, ?, CURRENT_TIMESTAMP())", array($user, $passwordToken));
   if (!$res)
@@ -116,14 +118,16 @@ function sendRecoveryEmail($user, $email)
     echo json_encode($ret);
     die();
   }
+  $data = array();
+  $data["BANNER_NAME"] = $AD_CONFIG["BANNER_NAME"];
+  $data["host"] = $AD_CONFIG["host"];
+  $data["passwordToken"] = $passwordToken;
+  $data["userName"] = $userName;
+  $mailText = get_include_contents('templates/recoveryEmail.php', $data);
   mail(
     $email,
     "Password Recovery for " .$AD_CONFIG["BANNER_NAME"],
-    "Someone has requested to reset your password for " .
-      $AD_CONFIG["BANNER_NAME"] . " if this was not you, " .
-      "you do not need to take any action.\n" .
-      "If you do wish to reset your password, follow the link below.\n" .
-      $AD_CONFIG["host"] . '/resetPassword/' . $passwordToken ,
+    $mailText,
     $headers);
   $db->commitTransaction();
 }
@@ -156,7 +160,7 @@ function resetPassword($userData)
       $row = $res[0];
       if ($row["email"] && $row["email"] != "")
       {
-        sendRecoveryEmail($row["idUsers"], $row["email"]);
+        sendRecoveryEmail($row["idUsers"], $row["login"], $row["email"]);
         $ret["success"] = true;
         $ret["message"] =
           "An email has been sent to the email associated with this account";
