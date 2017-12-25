@@ -220,7 +220,7 @@ function doResetPassword($data)
     $res = $db->queryAll("SELECT userID from passwordTokens where token=? and timestamp > CURRENT_TIMESTAMP() - INTERVAL 10 MINUTE ", ($data["token"] ));
     if (!$res || count($res) == 0)
     {
-      $error = "Token not found or expire, please request a new password token.";
+      $error = "Token not found or expired, please request a new password token.";
     }
     else
     {
