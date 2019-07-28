@@ -81,6 +81,7 @@ else if (isset($_POST["uploadFiles"]))
     send403();
   }
   $files = $_FILES["files"];
+  $doRedirect = !(isset($_POST["async"]) && $_POST["async"]=="y");
   if (is_array($files["name"]))
   {
     for ($index = 0; $index < count($files["name"]); $index++)
@@ -98,7 +99,15 @@ else if (isset($_POST["uploadFiles"]))
     }
     uploadImage($files["name"], $files["tmp_name"], $_POST["isVisible"]);
   }
-  refreshPage();
+  if ($doRedirect)
+  {
+    refreshPage();
+  }
+  else
+  {
+    echo "Upload success";
+    die();
+  }
 }
 else if (isset($_POST["logout"]))
 {

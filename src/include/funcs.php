@@ -26,7 +26,12 @@ function checkLogin($user, $password)
 
 function refreshPage()
 {
-  header("Location: http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]");
+  $protocol = "http://";
+  if (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] =='on'))
+  {
+    $protocol = "https://";
+  } 
+  header("Location: $protocol$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]");
   die();
 }
 
@@ -92,6 +97,7 @@ function getFileByName($fileName, $originalName)
 
 function sendError($errorText)
 {
+  http_response_code(500);
   echo $errorText;
   die();
 }
