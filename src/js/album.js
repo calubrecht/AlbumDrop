@@ -458,22 +458,26 @@ dragFiles = {
 
 function enableDrop()
 {
-  dropArea = document.getElementById("galleryTab");
+  dropArea1 = document.getElementById("galleryTab");
+  dropArea2 = document.getElementById("uploadTab");
 
   ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-      dropArea.addEventListener(eventName, preventDefaults, false)
+      document.addEventListener(eventName, preventDefaults, false)
   });
 
   ['dragenter', 'dragover'].forEach(eventName => {
-      dropArea.addEventListener(eventName, highlight, false)
+      dropArea1.addEventListener(eventName, highlight, false)
+      dropArea2.addEventListener(eventName, highlight, false)
   });
 
 
   ;['dragleave', 'drop'].forEach(eventName => {
-      dropArea.addEventListener(eventName, unhighlight, false)
+      dropArea1.addEventListener(eventName, unhighlight, false)
+      dropArea2.addEventListener(eventName, unhighlight, false)
   })
 
-  dropArea.addEventListener('drop', doUpload, false);
+  dropArea1.addEventListener('drop', doUpload, false);
+  dropArea2.addEventListener('drop', doUpload, false);
 
   cancelButton = document.getElementById('cancelDragUpload');
   cancelButton.addEventListener(
@@ -554,6 +558,7 @@ function doUpload(e)
 
 function populateFilenames(el, fileNames)
 {
+  el.innerHTML='';
   fileNames.forEach(
     function(fileName)
     {
