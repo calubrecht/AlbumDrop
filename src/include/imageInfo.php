@@ -48,6 +48,10 @@ function createThumbnail($srcFile, $destFile, $destX, $destY)
   {
     $srcImage = imagecreatefromgif($srcFile);
   }
+  elseif ($mimeType == "image/webp")
+  {
+    $srcImage = imagecreatefromwebp($srcFile);
+  }
   else
   {
     logwrite("Don't know mimetype = $mimeType");
@@ -83,6 +87,10 @@ function createThumbnail($srcFile, $destFile, $destX, $destY)
   elseif ($mimeType == "image/gif")
   {
     imagegif($newImage, $destFile);
+  }
+  elseif ($mimeType == "image/webp")
+  {
+    imagewebp($newImage, $destFile);
   }
   $res = ["height"=>$height, "width"=>$width, "thumbHeight"=>$newHeight, "thumbWidth"=>$newWidth, "mimeType"=>$mimeType];
   return $res;
