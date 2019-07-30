@@ -504,14 +504,24 @@ function enableDrop()
       formData = new FormData();
       //formData.append('files', files);
       [...files].forEach(f => formData.append("files[]", f));
+      total =  0;
+      for (i = 0; i < files.length; i++)
+      {
+         total += files[i]["size"];
+      }
       formData.append('isVisible', document.getElementById("isVisible").checked);
       formData.append('uploadFiles', "Upload");
       formData.append('async', "y");
+
+      progress = document.getElementById("progress-bar");
+      progress.style.display="block";
+
       xhr.addEventListener("readystatechange", function (e)
       {
          if (xhr.readyState ==4 && xhr.status == 200)
          {
            cancelDragged();
+           progress.style.display="none";
            document.getElementById('selectedFiles').value = '';
            pickTab("galleryTab");
            updateGallery("gallery");
@@ -522,6 +532,12 @@ function enableDrop()
            alert(xhr.responseText);
          }
       });
+      xhr.upload.addEventListener("progress", function (e)
+       {
+         p = (e.loaded * 100.0 / total)  || 100;
+         progress.value = p;
+       });
+
       xhr.open('POST', '/', true);
       xhr.send(formData);
 
@@ -537,6 +553,9 @@ function cancelDragged()
   selectSection.style.display="block";
   dragNames = document.getElementById('dragFileNames');
   dragNames.innerHTML = '';
+  progress = document.getElementById("progress-bar");
+  progress.style.display="none";
+  progress.value=0;
 }
 
 function doUpload(e)
@@ -545,10 +564,10 @@ function doUpload(e)
   fileList = dt.files;
 
   fileName = fileList[0];
-  console.log(fileName);
   dragFiles.setFiles(fileList);
   dragNames = document.getElementById('dragFileNames');
   populateFilenames(dragNames, dragFiles.fileNames);
+ // populatePreviews(dragNames, fileList);
   pickTab("uploadTab");
   dragSection = document.getElementById('dragUploads');
   dragSection.style.display="block";
@@ -567,6 +586,26 @@ function populateFilenames(el, fileNames)
       el.appendChild(fDiv);
     }
   );
+}
+
+function populatePreview(el, file)
+{
+  reader = new FileReader();
+  reader.readAsDataURL(file);
+  reader.onloadend = function()
+  {
+      img = document.createElement("img");
+      img.src = this.result;
+      d = document.createElement("div");
+      d.className = "uploadPreview";
+      d.appendChild(img);
+      el.appendChild(d); 
+  }
+}
+
+function populatePreviews(el, files)
+{
+  [...files].forEach(file => populatePreview(el, file));
 }
 
 function highlight(e) {
