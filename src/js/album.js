@@ -445,11 +445,11 @@ function loadAll()
 }
 
 
-dragFiles = new Object()
-dragFiles.files = null;
-dragFiles.fileNames = []
-dragFiles.clear = function() {this.files = null; this.fileNames=[]};
-dragFiles = {
+filesToUpload = new Object()
+filesToUpload.files = null;
+filesToUpload.fileNames = []
+filesToUpload.clear = function() {this.files = null; this.fileNames=[]};
+filesToUpload = {
   files : null,
   fileNames : [],
   clear : function () { this.files =null; this.fileNames=[]},
@@ -489,13 +489,13 @@ function enableDrop()
   uploadButton.addEventListener(
     "click",
     function(evt) {
-      if (dragFiles.files)
+      if (filesToUpload.files)
       {
-        files = dragFiles.files;
+        files = filesToUpload.files;
       }
       else
       {
-        selected = document.getElementById('selectedFiles').files;
+        var selected = document.getElementById('selectedFiles').files;
         files = selected;
       }
       evt.preventDefault();
@@ -542,18 +542,22 @@ function enableDrop()
       xhr.send(formData);
 
     });
+  var selected = document.getElementById('selectedFiles');
+  selected.addEventListener("change", function(e)
+    {
+     showPreviews(selected.files);
+    });
 }
 
 function cancelDragged()
 {
-  dragFiles.clear();
-  dragSection = document.getElementById('dragUploads');
+  filesToUpload.clear();
+  document.getElementById('selectedFiles').value = '';
+  var dragSection = document.getElementById('dragUploads');
   dragSection.style.display="none";
-  selectSection = document.getElementById('selectUploads');
+  var selectSection = document.getElementById('selectUploads');
   selectSection.style.display="block";
-  dragNames = document.getElementById('dragFileNames');
-  dragNames.innerHTML = '';
-  previews = document.getElementById('previews');
+  var previews = document.getElementById('previews');
   previews.innerHTML = '';
   progress = document.getElementById("progress-bar");
   progress.style.display="none";
@@ -566,10 +570,16 @@ function doUpload(e)
   var fileList = dt.files;
 
   var fileName = fileList[0];
-  dragFiles.setFiles(fileList);
-  var preview = document.getElementById('previews');
-  populatePreviews(preview, fileList);
   pickTab("uploadTab");
+  showPreviews(fileList);
+}
+
+function showPreviews(fileList)
+{
+  filesToUpload.setFiles(fileList);
+  var preview = document.getElementById('previews');
+  preview.innerHTML = '';
+  populatePreviews(preview, fileList);
   var dragSection = document.getElementById('dragUploads');
   dragSection.style.display="block";
   var selectSection = document.getElementById('selectUploads');

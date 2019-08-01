@@ -2,7 +2,7 @@
   <form id="uploadForm" action="" method="post" enctype="multipart/form-data">
     <div id="selectUploads"><div class="firstColumn">Files to Upload:</div> <input class="secondColumn" type="file" name="files[]" size=100 id="selectedFiles" multiple></div>
     <div id="dragUploads">
-      <div class="firstColumn">Files from Drop:</div> <div class="secondColumn" id="dragFileNames"></div>
+      <div class="firstColumn">Files to Upload:</div>
       <div class="spacer"></div>
     <div id="previews"></div>
       <input type="button" class="Center" value="Cancel" name="Cancel" id="cancelDragUpload">
