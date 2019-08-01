@@ -553,6 +553,8 @@ function cancelDragged()
   selectSection.style.display="block";
   dragNames = document.getElementById('dragFileNames');
   dragNames.innerHTML = '';
+  previews = document.getElementById('previews');
+  previews.innerHTML = '';
   progress = document.getElementById("progress-bar");
   progress.style.display="none";
   progress.value=0;
@@ -560,46 +562,50 @@ function cancelDragged()
 
 function doUpload(e)
 {
-  dt = e .dataTransfer;
-  fileList = dt.files;
+  var dt = e .dataTransfer;
+  var fileList = dt.files;
 
-  fileName = fileList[0];
+  var fileName = fileList[0];
   dragFiles.setFiles(fileList);
-  dragNames = document.getElementById('dragFileNames');
-  populateFilenames(dragNames, dragFiles.fileNames);
- // populatePreviews(dragNames, fileList);
+  var preview = document.getElementById('previews');
+  populatePreviews(preview, fileList);
   pickTab("uploadTab");
-  dragSection = document.getElementById('dragUploads');
+  var dragSection = document.getElementById('dragUploads');
   dragSection.style.display="block";
-  selectSection = document.getElementById('selectUploads');
+  var selectSection = document.getElementById('selectUploads');
   selectSection.style.display="none";
 }
 
-function populateFilenames(el, fileNames)
+function abbrevName(n)
 {
-  el.innerHTML='';
-  fileNames.forEach(
-    function(fileName)
-    {
-      fDiv = document.createElement("div");
-      fDiv.innerHTML = fileName;
-      el.appendChild(fDiv);
-    }
-  );
+  var maxLength = 30;
+  if (n.length > maxLength)
+  {
+    var l = n.length;
+    var firstSegment = maxLength - 7;
+    return n.substring(0,firstSegment) + '...' + n.substring(l-4, l);
+  }
+  return n;
 }
 
 function populatePreview(el, file)
 {
-  reader = new FileReader();
+  var reader = new FileReader();
   reader.readAsDataURL(file);
   reader.onloadend = function()
   {
-      img = document.createElement("img");
+      var img = document.createElement("img");
       img.src = this.result;
-      d = document.createElement("div");
+      var s = document.createElement("div");
+      s.innerText = abbrevName(file.name);
+      s.className = "uploadName";
+      var d = document.createElement("div");
       d.className = "uploadPreview";
       d.appendChild(img);
-      el.appendChild(d); 
+      var d2 = document.createElement("div");
+      d2.appendChild(s);
+      d2.appendChild(d);
+      el.appendChild(d2); 
   }
 }
 
@@ -658,7 +664,7 @@ function doUpdateGallery(galleryId, imgInfo)
 {
   var gallery = document.getElementById(galleryId);
   var insertAfter = gallery.firstChild
-  imgThumbIds = [];
+  var imgThumbIds = [];
   for (var i = 0 ; i < imgInfo.length; i++)
   {
     var divId = galleryId + "_" + imgInfo[i]["imgDivID"];
@@ -684,7 +690,7 @@ function doUpdateGallery(galleryId, imgInfo)
     }
  
   }
-  imgs = gallery.getElementsByClassName("imgThumb");
+  var imgs = gallery.getElementsByClassName("imgThumb");
   for (var j = 0; j < imgs.length; j++)
   {
     if (imgThumbIds.indexOf(imgs[j].id) == -1)
