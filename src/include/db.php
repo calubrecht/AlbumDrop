@@ -121,20 +121,21 @@ class dbHolder
     {
       return;
     }
+    $host = $AD_CONFIG["DB_HOST"];
+    $dbName = $AD_CONFIG["DB_NAME"];
+    $dbport = $AD_CONFIG["DB_PORT"];
+    $dbuser = $AD_CONFIG["DB_USER"];
+    $dbpass = $AD_CONFIG["DB_PASSWORD"];
+    $pdo_connect = 'mysql:host='.$host.';dbname='.$dbName;
+    $pdo_connect .= ';port='.$dbport;
 		try
     {
-		  $host = $AD_CONFIG["DB_HOST"];
-      $dbName = $AD_CONFIG["DB_NAME"];
-      $dbport = $AD_CONFIG["DB_PORT"];
-      $dbuser = $AD_CONFIG["DB_USER"];
-      $dbpass = $AD_CONFIG["DB_PASSWORD"];
-			$pdo_connect = 'mysql:host='.$host.';dbname='.$dbName;
-		  $pdo_connect .= ';port='.$dbport;
 			$this->db = new PDO($pdo_connect, $dbuser, $dbpass, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
       $this->dbInited = true;
 
 		} catch (PDOException $e) {
-			$this->error = "PDOException: ".$e->getMessage();
+      $this->error = "PDOException: ".$e->getMessage();
+      //echo "Refused for " . $pdo_connect . ' user=' . $dbuser . ' pass=' .$dbpass;
 		}
 
   }

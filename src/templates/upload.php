@@ -7,7 +7,7 @@
     <div id="previews"></div>
       <input type="button" class="Center" value="Cancel" name="Cancel" id="cancelDragUpload">
     </div>
-    <div class="firstColumn">Set images as Visible:</div> <div clas="secondColumn"><input type="checkbox" name="isVisible" id="isVisible" checked><span class="helpIcon" onclick="showHelpBox(arguments[0], this, 'visible')"><img src='ad_icons/help.png'></span></div><div class="spacer"> </div>
+    <div class="firstColumn">Set images as Visible:</div> <div clas="secondColumn"><input type="checkbox" name="isVisible" id="isVisible" checked><span class="helpIcon" onclick="showHelpBox(arguments[0], this, 'visible')"><img src='album_icons/help.png'></span></div><div class="spacer"> </div>
     <input type="submit" class="center" value="Upload" name="uploadFiles" id="uploadFiles">
     <div><progress id="progress-bar" max=100 value=0 style="display:none"></progress></div>
   </form>

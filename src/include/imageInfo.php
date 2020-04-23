@@ -17,7 +17,7 @@ function getPublicImages()
 {
   global $db; 
   $results =
-    $db->queryAll("SELECT id FROM images WHERE isPublic=1 order by imageTS DESC", $ownerId);
+    $db->queryAll("SELECT id FROM images WHERE isPublic=? order by imageTS DESC", 1);
   $ret = array();
   foreach ($results as $row)
   {

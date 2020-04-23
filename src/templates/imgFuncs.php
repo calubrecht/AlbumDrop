@@ -3,7 +3,7 @@
 function getInfoBox()
 {
   return "<div id=\"imageInfoBox\">
-   <img src=\"ad_icons\\delete.png\" class=\"icon\" onclick=\"hideInfoBox()\" title=\"Hide\">
+   <img src=\"album_icons\\delete.png\" class=\"icon\" onclick=\"hideInfoBox()\" title=\"Hide\">
    <form>
      <div><div class=\"firstColumn\">Image Name:</div> <input id=\"ImageName\"></input class=\"secondColumn\"></div>
      <div><div class=\"firstColumn\">isVisible:</div> <input id=\"IsVisible\" type=\"checkbox\" class=\"secondColumnCheck\"></div>
@@ -18,7 +18,7 @@ function getInfoBox()
 function getZoomBox()
 {
   return "<div id=\"zoomBox\">
-   <img src=\"ad_icons\\delete.png\" class=\"icon\" onclick=\"hideZoomBox()\" title=\"Hide\">
+   <img src=\"album_icons\\delete.png\" class=\"icon\" onclick=\"hideZoomBox()\" title=\"Hide\">
    <div>
      <img id=\"zoomImage\" src=\"\"  onload=\"showZoombox()\">
    </div>
@@ -37,9 +37,9 @@ function getImgThumbInfo($imgId, $gallery)
   $height = isset($imgInfo["height"]) ? $imgInfo["height"] : 0;
   $extension = $imgInfo["extension"];
 
-  $deleteBtn = $imgInfo["ownerId"] == getCurrentUserId() ?  "<img src=\"ad_icons\\delete.png\" class=\"icon\" title=\"Delete image\" onclick=\"deleteImage('$imgId', '$gallery')\">" : "";
+  $deleteBtn = $imgInfo["ownerId"] == getCurrentUserId() ?  "<img src=\"album_icons\\delete.png\" class=\"icon\" title=\"Delete image\" onclick=\"deleteImage('$imgId', '$gallery')\">" : "";
 
-  $html = "<div class=\"thumb\"><div class=\"mainImage\"><img  src=\"thumbs/$imgId$extension\" alt=\"$fileName\"></div><div class=\"overlay\">" . $deleteBtn ."<img src=\"ad_icons\\info.png\" onclick=\"displayInfoBox('$imgId')\" class=\"icon\" title=\"Image Info\"><img src=\"ad_icons\\magnify.png\" onclick=\"zoom('images/$imgId', $width, $height)\" class=\"icon\"></div></div>
+  $html = "<div class=\"thumb\"><div class=\"mainImage\"><img  src=\"thumbs/$imgId$extension\" alt=\"$fileName\"></div><div class=\"overlay\">" . $deleteBtn ."<img src=\"album_icons\\info.png\" onclick=\"displayInfoBox('$imgId')\" class=\"icon\" title=\"Image Info\"><img src=\"album_icons\\magnify.png\" onclick=\"zoom('images/$imgId', $width, $height)\" class=\"icon\"></div></div>
    <div class=\"fileName\" title=\"$fileName\">$fileName</div>
    <div class=\"fileOwner\">owner: $owner</div>";
 
