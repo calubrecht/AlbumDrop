@@ -5,7 +5,7 @@ function getInfoBox()
   return "<div id=\"imageInfoBox\">
    <img src=\"album_icons\\delete.png\" class=\"icon\" onclick=\"hideInfoBox()\" title=\"Hide\">
    <form>
-     <div><div class=\"firstColumn\">Image Name:</div> <input id=\"ImageName\"></input class=\"secondColumn\"></div>
+     <div><div class=\"firstColumn\">Image Name:</div> <input id=\"ImageName\" type=\"text\" class=\"secondColumn\"></div>
      <div><div class=\"firstColumn\">isVisible:</div> <input id=\"IsVisible\" type=\"checkbox\" class=\"secondColumnCheck\"></div>
      <div><div class=\"firstColumn\">isPublic:</div> <input id=\"IsPublic\" type=\"checkbox\" class=\"secondColumnCheck\"></div>
      <div><div class=\"firstColumn\" id=\"UpdateButton\"><input type=\"button\" value=\"Update\" onclick=\"updateImageInfo()\"></div></div>

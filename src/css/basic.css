@@ -36,7 +36,11 @@ div.spacer {clear:both}
 
 #uploadForm {background:rgb(220,220,220); margin-left:auto; margin-right:auto; width:400px; border-radius:15px; margin-top:15px; border-style:solid; border-width: 1px; border-color:rgb(220,220,200)}
 
-div#imageInfoBox {display:none; position:absolute; top:50%; left:50%; width:530px; margin-left:-225px; height:300px; margin-top:-150px; border-style:inset; border-width:4px; border-color:dark-grey; z-index: 50; background:rgb(220,220,220);}
+div#imageInfoBox {display:none; position:absolute; top:50%; left:50%; width:580px; margin-left:-225px; height:300px; margin-top:-150px; border-style:inset; border-width:4px; border-color:dark-grey; z-index: 50; background:rgb(220,220,220);}
+div#imageInfoBox form div {margin:5px}
+div#imageInfoBox form div input[type=text] {margin-top:5px}
+div#imageInfoBox form div input[type=checkbox] {margin-top:8px}
+div#imageInfoBox form div a.secondColumn {margin-top:5px}
 div#imageInfoError {display:none; color:red; clear:both}
 
 div#zoomBox {display:none; position:absolute; top:15px; left:15px;  border-style:inset; border-width:4px; border-color:dark-grey; z-index: 50; background:rgba(0,0,0, .5); padding:5px; }
