@@ -1,20 +1,5 @@
 <?php 
 
-function verifyCSRF()
-{
-  $cookieToken = $_COOKIE["XSRF_TOKEN"];
-  $headerToken = apache_request_headers()['X-Xsrf-Token'];
-  if (!$cookieToken)
-  {
-    return false;
-  }
-  if ($cookieToken != $headerToken)
-  {
-    return false;
-  }
-  return true;
-}
-
 function getUserImages($ownerId)
 {
   global $db; 
@@ -120,6 +105,14 @@ function getImgInfo($imgId)
 
 function updateImgInfo($imageId, $fileName, $isPublic, $isVisible)
 {
+  if (!verifyCSRF())
+  {
+    $ret = array();
+    $ret["success"] = false;
+    $ret["error"] = "Invalid token, please try again";
+    setTokenCookie();
+    return json_encode($ret);
+  }
   global $db;
   $imgOwner = $db->queryOneColumn("SELECT owner  FROM images WHERE images.id=?", "owner", "$imageId");
   if (getCurrentUserId() != $imgOwner)
@@ -159,8 +152,7 @@ function deleteImg($imageId)
     $ret = array();
     $ret["success"] = false;
     $ret["error"] = "Invalid token, please try again";
-    $csrf_token=bin2hex(random_bytes(20));
-    setcookie("XSRF_TOKEN", $csrf_token, 0, '/');
+    setTokenCookie();
     return json_encode($ret);
   }
   global $db;

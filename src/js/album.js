@@ -535,6 +535,7 @@ function enableDrop()
          total += files[i]["size"];
       }
       formData.append('isVisible', document.getElementById("isVisible").checked);
+      formData.append('xsrf_token', document.getElementById("xsrf_token").value);
       formData.append('uploadFiles', "Upload");
       formData.append('async', "y");
 

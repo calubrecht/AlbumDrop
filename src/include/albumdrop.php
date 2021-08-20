@@ -61,53 +61,67 @@ elseif (isset($_GET["updateInfo"]))
 }
 elseif (isset($_POST["username"]))
 {
-  $userId = checkLogin($_POST["username"], $_POST["password"]);
-  if ($userId != -1)
+  if (!verifyCSRFForm())
   {
-    $loggedIn = true;
-    $user = $_POST["username"];
-    setUser($user, $userId);
-    refreshPage();
+    $error = "Invalid token, please try again";
   }
   else
   {
-    $error = "Incorrect Credentials";
-    $forgotPassword = true;
+    $userId = checkLogin($_POST["username"], $_POST["password"]);
+    if ($userId != -1)
+    {
+      $loggedIn = true;
+      $user = $_POST["username"];
+      setUser($user, $userId);
+      refreshPage();
+    }
+    else
+    {
+      $error = "Incorrect Credentials";
+      $forgotPassword = true;
+    }
   }
 }
 else if (isset($_POST["uploadFiles"]))
 {
-  if (!isLoggedIn())
+  if (!verifyCSRFForm())
   {
-    send403();
-  }
-  $files = $_FILES["files"];
-  $doRedirect = !(isset($_POST["async"]) && $_POST["async"]=="y");
-  if (is_array($files["name"]))
-  {
-    for ($index = 0; $index < count($files["name"]); $index++)
-    {
-      uploadImage($files["name"][$index], $files["tmp_name"][$index], $_POST["isVisible"]);
-    }
+    sendError( "Invalid token, please try again");
   }
   else
   {
-    if (isset($files["error"]) && $files["error"] > 0)
+    if (!isLoggedIn())
     {
-      $err = $files["error"];
-      if ($err == 1 || $err = 2) sendError("Upload failed. File too large.");
-      if ($err > 2) sendError("Upload failed. Unknown error.");
+      send403();
     }
-    uploadImage($files["name"], $files["tmp_name"], $_POST["isVisible"]);
-  }
-  if ($doRedirect)
-  {
-    refreshPage();
-  }
-  else
-  {
-    echo "Upload success";
-    die();
+    $files = $_FILES["files"];
+    $doRedirect = !(isset($_POST["async"]) && $_POST["async"]=="y");
+    if (is_array($files["name"]))
+    {
+      for ($index = 0; $index < count($files["name"]); $index++)
+      {
+        uploadImage($files["name"][$index], $files["tmp_name"][$index], $_POST["isVisible"]);
+      }
+    }
+    else
+    {
+      if (isset($files["error"]) && $files["error"] > 0)
+      {
+        $err = $files["error"];
+        if ($err == 1 || $err = 2) sendError("Upload failed. File too large.");
+        if ($err > 2) sendError("Upload failed. Unknown error.");
+      }
+      uploadImage($files["name"], $files["tmp_name"], $_POST["isVisible"]);
+    }
+    if ($doRedirect)
+    {
+      refreshPage();
+    }
+    else
+    {
+      echo "Upload success";
+      die();
+    }
   }
 }
 else if (isset($_POST["logout"]))
@@ -167,8 +181,7 @@ else if (isset($_SESSION["user"]))
   $loggedIn = true;
   $user = $_SESSION["user"];
 }
-$csrf_token=bin2hex(random_bytes(20));
-setcookie("XSRF_TOKEN", $csrf_token, 0, '/');
+$csrf_token=setTokenCookie();
 if ($loggedIn)
 {
   require_once("templates/gallery.php");

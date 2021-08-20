@@ -133,4 +133,42 @@ function get_include_contents($filename, $data)
   return false;
 }
 
+function verifyCSRF()
+{
+  $cookieToken = $_COOKIE["XSRF_TOKEN"];
+  $headerToken = apache_request_headers()['X-Xsrf-Token'];
+  if (!$cookieToken)
+  {
+    return false;
+  }
+  if ($cookieToken != $headerToken)
+  {
+    return false;
+  }
+  return true;
+}
+
+function verifyCSRFForm()
+{
+  $cookieToken = $_COOKIE["XSRF_TOKEN"];
+  $postToken = $_POST["xsrf_token"];
+  if (!$cookieToken)
+  {
+    return false;
+  }
+  if ($cookieToken != $postToken)
+  {
+    return false;
+  }
+  return true;
+}
+
+
+function setTokenCookie()
+{
+    $csrf_token=bin2hex(random_bytes(20));
+    setcookie("XSRF_TOKEN", $csrf_token, 0, '/');
+    return $csrf_token;
+}
+
 ?>

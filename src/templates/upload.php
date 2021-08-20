@@ -9,7 +9,7 @@
     </div>
     <div class="firstColumn">Set images as Visible:</div> <div clas="secondColumn"><input type="checkbox" name="isVisible" id="isVisible" checked><span class="helpIcon" onclick="showHelpBox(arguments[0], this, 'visible')"><img src='album_icons/help.png'></span></div><div class="spacer"> </div>
     <input type="submit" class="center" value="Upload" name="uploadFiles" id="uploadFiles">
-    <input type="hidden" name='xsrf_token' value='<?php echo $csrf_token?>'></input>
+    <input type="hidden" name='xsrf_token' id="xsrf_token" value='<?php echo $csrf_token?>'></input>
     <div><progress id="progress-bar" max=100 value=0 style="display:none"></progress></div>
   </form>
 
