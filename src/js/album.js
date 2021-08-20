@@ -162,6 +162,11 @@ function updateImageInfo()
     }
   };
   xmlhttp.open("GET", "?updateInfo="+visibleImgId +"&fileName="+ encodeURI(fileName) + "&isPublic=" + isPublic + "&isVisible=" + isVisible);
+  let tokenCookie = getTokenCookie();
+  if (tokenCookie)
+  {
+    xmlhttp.setRequestHeader('X-XSRF-TOKEN', tokenCookie);
+  }
   xmlhttp.send();
 }
 
@@ -220,6 +225,11 @@ function register()
     };
     xmlhttp.open("POST", "", true);
     xmlhttp.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+    let tokenCookie = getTokenCookie();
+    if (tokenCookie)
+    {
+      xmlhttp.setRequestHeader('X-XSRF-TOKEN', tokenCookie);
+    }
     xmlhttp.send(JSON.stringify(formData));
   }
 }
@@ -271,6 +281,11 @@ function resetPassword()
     };
     xmlhttp.open("POST", "/", true);
     xmlhttp.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+    let tokenCookie = getTokenCookie();
+    if (tokenCookie)
+    {
+      xmlhttp.setRequestHeader('X-XSRF-TOKEN', tokenCookie);
+    }
     xmlhttp.send(JSON.stringify(formData));
   }
 }
@@ -321,6 +336,11 @@ function sendPasswordLink()
     };
     xmlhttp.open("POST", "", true);
     xmlhttp.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+    let tokenCookie = getTokenCookie();
+    if (tokenCookie)
+    {
+      xmlhttp.setRequestHeader('X-XSRF-TOKEN', tokenCookie);
+    }
     xmlhttp.send(JSON.stringify(formData));
   }
 }
@@ -366,6 +386,11 @@ function deleteImage(imgId, gallery)
   command["imgId"] = imgId;
   xmlhttp.open("POST", "", true);
   xmlhttp.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+  let tokenCookie = getTokenCookie();
+  if (tokenCookie)
+  {
+    xmlhttp.setRequestHeader('X-XSRF-TOKEN', tokenCookie);
+  }
   xmlhttp.send(JSON.stringify(command));
 }
 
@@ -635,6 +660,18 @@ function preventDefaults (e) {
     e.stopPropagation()
 }
 
+function getTokenCookie()
+{
+  let cookies = document.cookie.split('; ');
+  let XSRF_Cookie = cookies.find(row => row.startsWith('XSRF_TOKEN='));
+  if (XSRF_Cookie)
+  {
+    return XSRF_Cookie.split('=')[1];
+  }
+  return null;
+}
+
+
 function updateGallery(gallery)
 {
   var xmlhttp = new XMLHttpRequest();
@@ -667,6 +704,11 @@ function updateGallery(gallery)
   command["gallery"] = gallery;
   xmlhttp.open("POST", "", true);
   xmlhttp.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+  let tokenCookie = getTokenCookie();
+  if (tokenCookie)
+  {
+    xmlhttp.setRequestHeader('X-XSRF-TOKEN', tokenCookie);
+  }
   xmlhttp.send(JSON.stringify(command));
 }
 

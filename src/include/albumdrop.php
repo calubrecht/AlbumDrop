@@ -13,6 +13,7 @@ $loggedIn = false;
 $error = "";
 $forgotPassword = false;
 $postData = file_get_contents("php://input");
+
 if (isset($_GET["action"]))
 {
   if (isset($_GET["id"]))
@@ -166,6 +167,8 @@ else if (isset($_SESSION["user"]))
   $loggedIn = true;
   $user = $_SESSION["user"];
 }
+$csrf_token=bin2hex(random_bytes(20));
+setcookie("XSRF_TOKEN", $csrf_token, 0, '/');
 if ($loggedIn)
 {
   require_once("templates/gallery.php");

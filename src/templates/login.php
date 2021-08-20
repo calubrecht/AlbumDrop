@@ -12,6 +12,7 @@ $showRegister = $AD_CONFIG["ALLOW_REGISTRATION"];
   <form action="" method="post" >
   <div><div class="login firstColumn">Username: </div><input class="secondColumn" type="text" name="username"></div>
   <div><div class="password firstColumn">Password:</div> <input class="secondColumn" type="password" name="password"></div>
+  <input type="hidden" name='xsrf_token' value='<?php echo $csrf_token?>'></input>
   <div><input type="submit" value="Login"></div>
   <?php if ($forgotPassword) print '<div><span onclick="forgotPassword()" class="forgotLink">Forgot Password?</span></div>' ?>
   </form>
