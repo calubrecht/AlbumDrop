@@ -73,6 +73,7 @@ elseif (isset($_POST["username"]))
       $loggedIn = true;
       $user = $_POST["username"];
       setUser($user, $userId);
+      session_regenerate_id(true);
       refreshPage();
     }
     else
@@ -127,6 +128,7 @@ else if (isset($_POST["uploadFiles"]))
 else if (isset($_POST["logout"]))
 {
   $loggedIn = false;
+  session_regenerate_id(true);
   session_destroy();
   refreshPage();
 }
