@@ -10,6 +10,8 @@ html_header("Gallery", "onload=\"loadAll()\"");
   <?= getZoomBox() ?>
 <div id = "galleryTab" class="tabBody">
 <div id="galleryError" class="error"><?= $error ?></div>
+<div class="grid">
+</div>
   <form class="LogoutButton" action="" method="post" >
   <div><input type="submit" name="logout" value="Logout"></div>
   </form>

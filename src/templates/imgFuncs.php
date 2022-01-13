@@ -37,9 +37,9 @@ function getImgThumbInfo($imgId, $gallery)
   $height = isset($imgInfo["height"]) ? $imgInfo["height"] : 0;
   $extension = $imgInfo["extension"];
 
-  $deleteBtn = $imgInfo["ownerId"] == getCurrentUserId() ?  "<img src=\"album_icons\\delete.png\" class=\"icon\" title=\"Delete image\" onclick=\"deleteImage('$imgId', '$gallery')\">" : "";
+  $deleteBtn = $imgInfo["ownerId"] == getCurrentUserId() ?  "<img src=\"album_icons\\delete.png\" class=\"icon\" title=\"Delete image\" onclick=\"deleteImage('$imgId', '$gallery')\" draggable=\"false\">" : "";
 
-  $html = "<div class=\"thumb\"><div class=\"mainImage\"><img  src=\"thumbs/$imgId$extension\" alt=\"$fileName\"></div><div class=\"overlay\">" . $deleteBtn ."<img src=\"album_icons\\info.png\" onclick=\"displayInfoBox('$imgId')\" class=\"icon\" title=\"Image Info\"><img src=\"album_icons\\magnify.png\" onclick=\"zoom('images/$imgId', $width, $height)\" class=\"icon\"></div></div>
+  $html = "<div class=\"thumb\"><div class=\"mainImage\"><img  src=\"thumbs/$imgId$extension\" alt=\"$fileName\" draggable=\"false\"></div><div class=\"overlay\">" . $deleteBtn ."<img src=\"album_icons\\info.png\" onclick=\"displayInfoBox('$imgId')\" class=\"icon\" title=\"Image Info\" draggable=\"false\"><img src=\"album_icons\\magnify.png\" onclick=\"zoom('images/$imgId', $width, $height)\" class=\"icon\" draggable=\"false\"></div></div>
    <div class=\"fileName\" title=\"$fileName\">$fileName</div>
    <div class=\"fileOwner\">owner: $owner</div>";
 

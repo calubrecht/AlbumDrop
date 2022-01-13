@@ -1,3 +1,7 @@
+
+var muuri = null;
+
+
 function pickTab(tab)
 {
   hideZoomBox();
@@ -467,6 +471,10 @@ function loadAll()
 {
   updateGallery("gallery");
   enableDrop();
+  muuri = new Muuri('.grid', {dragEnabled:true});
+  muuri.on('layoutEnd', function (items) {
+    console.log(items.map( i => i.getElement().getElementsByClassName("fileName")[0].innerText));
+  });
 }
 
 
@@ -715,7 +723,7 @@ function updateGallery(gallery)
 
 function doUpdateGallery(galleryId, imgInfo)
 {
-  var gallery = document.getElementById(galleryId);
+  var gallery = document.getElementById(galleryId).getElementsByClassName("grid")[0] ;
   var insertAfter = gallery.firstChild
   var imgThumbIds = [];
   for (var i = 0 ; i < imgInfo.length; i++)
@@ -723,16 +731,26 @@ function doUpdateGallery(galleryId, imgInfo)
     var divId = galleryId + "_" + imgInfo[i]["imgDivID"];
     imgThumbIds[i] = divId;
     var box = document.getElementById(divId);
-    //var logoutButton = gallery.getElementsByClassName("LogoutButton")[0];
     if (box == null)
     {
       box = document.createElement("span");
-      box.className="imgThumb";
+      box.className="imgThumb item-content";
       box.id=divId;
-      box.draggable = "true";
       box.innerHTML = imgInfo[i]["html"];
-      gallery.insertBefore(box, insertAfter.nextSibling);
-      insertAfter = box;
+
+      var outerBox = document.createElement("span");
+      outerBox.className="item";
+      outerBox.appendChild(box);
+
+      if (muuri)
+      {
+        muuri.add(outerBox);
+      }
+      else
+      {
+        gallery.insertBefore(outerBox, insertAfter.nextSibling);
+        insertAfter = outerBox;
+      }
     }
     else
     {

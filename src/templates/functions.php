@@ -10,7 +10,7 @@ function html_header($title, $bodyScript = "")
   echo "<meta name=viewport content=\"width=device-width, initial-scale=1\">";
   echo "</head>\n";
   echo "<body " . $bodyScript .">\n";
-  echo "<h1><img src=\"/".$AD_CONFIG["BANNER"]."\">".$AD_CONFIG["BANNER_NAME"]."</h1>";
+  echo "<h1><img src=\"/".$AD_CONFIG["BANNER"]."\" draggable=\"false\">".$AD_CONFIG["BANNER_NAME"]."</h1>";
 }
 
 function html_footer()
@@ -21,6 +21,8 @@ function html_footer()
 function scriptTag()
 {
   echo "<script type='text/javascript' src='/js/album.js'></script>";
+  echo "<script type='text/javascript' src='/js/muuri.min.js'></script>";
+  //echo "<script src='https://cdn.jsdelivr.net/npm/muuri@0.9.5/dist/muuri.js'></script>";
 }
 
 ?>
