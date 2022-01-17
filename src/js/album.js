@@ -779,6 +779,10 @@ function showHelpBox(event, element, category)
   {
     text = "Toggle whether to let the world see this image if they have the link.";
   }
+  else if (category == "public")
+  {
+    text = "Toggle whether this image shows up in other users' \"Public Images\" tab.";
+  }
   else
   {
     return;
