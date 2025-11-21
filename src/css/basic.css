@@ -36,6 +36,8 @@ div.spacer {clear:both}
 
 #uploadForm {background:rgb(220,220,220); margin-left:auto; margin-right:auto; width:400px; border-radius:15px; margin-top:15px; border-style:solid; border-width: 1px; border-color:rgb(220,220,200)}
 
+#uploadForm div#dragUploads {display:none}
+
 div#imageInfoBox {display:none; position:absolute; top:50%; left:50%; width:580px; margin-left:-225px; height:300px; margin-top:-150px; border-style:inset; border-width:4px; border-color:dark-grey; z-index: 50; background:rgb(220,220,220);}
 div#imageInfoBox form div {margin:5px}
 div#imageInfoBox form div input[type=text] {margin-top:5px}
